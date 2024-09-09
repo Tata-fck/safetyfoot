@@ -1,0 +1,186 @@
+:root {
+    --rojo: #FFFFFF;
+    --fondo: #d7d7d7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background: url('../../images/fondo-barra.svg') no-repeat center;
+    background-size: cover;
+    color: #353535;
+    padding: 5px 0;
+    width: 100%;
+    top: 0;
+}
+
+header .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+    transition: width 0.3s ease; /* Agrega transición para cambio de tamaño */
+}
+
+.titulo {
+    font-size: 2rem;            
+    margin-left: 15px;
+    white-space: nowrap;
+}
+
+nav {
+    flex-grow: 1;
+    text-align: right;
+}
+
+/* Checkbox oculto */
+.menu-toggle {
+    display: none;
+}
+
+
+.menu-icon {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    position: relative;
+    order: 2; /* Asegura que el icono se mantenga a la derecha en el layout de flexbox */
+}
+
+.menu-items {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    order: 1;
+    flex-direction: row;
+    text-align: center;
+    transition: all 0.3s ease; /* Transición suave para el menú */
+}
+
+nav a {
+    color: #e7e7e7;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    position: relative;
+    transition: color 0.3s ease; /* Agregar transición de color */
+}
+
+nav a:hover {
+    color: #ffcc00; /* Cambiar color al pasar el cursor */
+}
+
+nav a::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #ffcc00; /* Color de la línea de la animación */
+    transition: all 0.3s ease; /* Agregar transición de la línea */
+    transform: translateX(-50%);
+}
+
+nav a:hover::before {
+    width: 100%;
+}
+
+/* Checkbox: menú oculto */
+.menu-toggle:checked ~ .menu-items {
+    display: flex;
+}
+
+/* Checkbox: iconos */
+.menu-toggle:checked ~ .menu-icon .menu-open {
+    display: none;
+}
+
+.menu-toggle:not(:checked) ~ .menu-icon .menu-close {
+    display: none;
+    padding: 100px;
+}
+
+.menu-toggle:not(:checked) ~ .menu-icon .menu-open {
+    display: block;
+}
+/*--------------DISPOSITIVOS MOVILES--------------------*/
+/*------header-----------*/
+@media (max-width: 830px) {
+    header .contenedor {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .titulo {
+        font-size: 1.5rem;
+        margin-left: 10%; /* Ajusta el margen para centrar mejor el título en pantallas pequeñas */
+    }
+
+    .menu-icon {
+        display: block;
+        padding-left: 20px;
+    }
+
+    nav {
+        display: flex;
+        justify-content: right; /* Centra el contenido del menú */
+        width: 100%; /* Asegura que el nav ocupe el espacio completo */
+    }
+
+    nav a {
+        margin: 5px 10px;
+        font-size: 0.9rem;
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 5px 0;
+    }
+
+    .menu-items {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-items.active {
+        display: flex;
+        
+    }
+
+    .menu-items.active a {
+        font-size: 1rem; /* Tamaño del texto cuando el menú está activo */
+    }
+
+    .logo-expanded {
+        width: 100px; /* Ajusta este valor según sea necesario */
+        transition: width 0.3s ease; /* Agrega una transición suave */
+    }
+}
+
+@media (max-width: 400px) {
+    .logo {
+        width: 40px;
+    }
+
+    .titulo {
+        display: none; /* Oculta el título en pantallas pequeñas */
+    }
+
+    nav a {
+        font-size: 0.8rem;
+    }
+}
