@@ -1,28 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <!-- Meta información -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/logo.png" type="image/x-icon">
+<?php include("elements/header/header.html");?>
 
-    <!-- Enlaces a hojas de estilo -->
-    <link rel="stylesheet" href="css/inicio.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=EB+Garamond:wght@400..800&family=Spinnaker&display=swap" rel="stylesheet">
+<!-- Enlaces a hojas de estilo -->
+ <link rel="stylesheet" href="css/inicio.css">
 
-    <!-- Título de la página -->
-    <title>Safety FootPrint</title>
-
-    <!-- Script para insertar el encabezado -->
-    <script src="elements/header/insertHeader.js" defer></script>
-</head>
-
-    <body>
+<body>
     <!--Pagina de Incio-->
     <!--Carrusel 1-->
     <div class="carrusel2">
@@ -229,8 +210,6 @@
             <div class="btn-r"><img src="images/inicio/flecha-R.svg"></div>
         </div>
     </div>-->
-
-    <script src="javascript/inicio.js"></script>
-    <script src="elements/footer/insertFooter.js" defer></script>
     </body>
-</html>
+
+<?php include("elements/footer/footer.html");?>

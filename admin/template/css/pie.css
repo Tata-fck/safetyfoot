@@ -1,0 +1,94 @@
+/*:::::Pie de Pagina*/
+
+.pie-pagina{
+    width: 100%;
+    background: url('../../../images/fondo-footer.svg') no-repeat  right bottom;
+    background-size: auto 100% ;
+    background-color: #161616;
+}
+.pie-pagina .grupo-1{
+    width: 70%;
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 30px;
+}
+.pie-pagina .grupo-1 .box figure{
+    width: auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pie-pagina .grupo-1 .box figure img{
+    width: 55%;
+}
+.pie-pagina .grupo-1 .box h2{
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 17px;
+}
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.pie-pagina .grupo-1 .box a{
+    text-decoration: none;
+}
+
+.pie-pagina .grupo-1 .red-social a{
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 10px;
+    margin-top: 20px;
+    text-align: center;
+    transition: all 300ms ease;
+    filter: invert(100%);
+
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translate(0, -50%);
+    user-select: none;
+}
+
+.pie-pagina .grupo-1 .red-social a:hover {
+    background-color: #387b94;
+}
+
+.pie-pagina .grupo-2{
+    background-color: #4d2700;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+.pie-pagina .grupo-2 small{
+    font-size: 12px;
+}
+
+/*--------------DISPOSITIVOS MOVILES--------------------*/
+@media screen and (max-width:830px){
+    .pie-pagina{
+        background-size: 130% auto;
+    }
+
+    .pie-pagina .grupo-1{
+        width: 90%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap:3px;
+        margin-top: 10px;
+    }
+
+    .pie-pagina .grupo-1 .box figure img{
+        width: 30%;
+    }
+
+    .pie-pagina.grupo-1 .box p{
+        font-size: 30px;
+    }
+}
