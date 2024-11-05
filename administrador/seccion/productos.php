@@ -2,7 +2,8 @@
 
 <link rel="stylesheet" href="css/contacto.css">
 
-<div class="cont-form">
+<body>
+    <div class="cont-form">
         <div class="info-form">
             <h2>Contáctanos</h2>
             <p>Por favor envía tus dudas o comentarios en el siguiente formulario.</p>
@@ -17,7 +18,7 @@
             <input type="submit" name="enviar" value="Enviar Mensaje" class="btn-enviar">
         </form>
     </div>
-
+</body>
 
 <?php include("../template/pie.php")?>
 

@@ -2,11 +2,13 @@
 <html lang="es">
 <!-- header.html -->
 <header>
+
+    <?php $url="http://".$_SERVER['HTTP_HOST']."/safetyfoot" ?>
     <!-- Meta información -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo.png" type="image/x-icon">
+    <link rel="icon" href="<?php echo $url;?>/images/logo.png" type="image/x-icon">
 
     <!-- Enlaces a hojas de estilo -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -15,7 +17,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=EB+Garamond:wght@400..800&family=Spinnaker&display=swap" rel="stylesheet">
 
-    <?php $url="http://".$_SERVER['HTTP_HOST']."/safetyfoot" ?>
     <link rel="stylesheet" href="<?php echo $url;?>/administrador/template/css/cabecera.css">
     
     <!-- Título de la página -->
@@ -23,7 +24,7 @@
 
     <div class="contenedor">
         <!-- Logo -->
-        <a href="inicio.html"><img src="<link rel="stylesheet" href="<?php echo $url;?>/images/logo.png" alt="Safety Footprint Logo" class="logo"></a>
+        <a href="inicio.html"><img src="<?php echo $url;?>/images/logo.png" alt="Safety Footprint Logo" class="logo"></a>
         <h2 class="titulo">SAFETY FOOTPRINT</h2>
 
         <!-- Menú de Navegación -->
