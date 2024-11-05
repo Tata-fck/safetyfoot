@@ -1,4 +1,4 @@
-<?php include("template/cabecera.html");?>
+<?php include("template/cabecera.php");?>
 
 Hola Mundo
 

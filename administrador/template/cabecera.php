@@ -15,6 +15,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=EB+Garamond:wght@400..800&family=Spinnaker&display=swap" rel="stylesheet">
 
+    <?php $url="http://".$_SERVER['HTTP_HOST']."/safetyfoot" ?>
+    
     <!-- Título de la página -->
     <title>Safety FootPrint</title>
 
@@ -34,10 +36,10 @@
         </label>
 
             <div class="menu-items" id="menu-items">
-                <a href="../inicio.php" class="activo">Principal</a>
-                <a href="../catalogo.php">Catalogo</a>
-                <a href="../nosotros.php">Nosotros</a>
-                <a href="../contacto.php">Contactanos</a>
+                <a href="<?php echo $url;?>/administrador/inicio.php" class="activo">Inicio</a>
+                <a href="<?php echo $url;?>/administrador/seccion/productos.php">Catalogo</a>
+                <a href="<?php echo $url;?>/inicio.php">Ver Web</a>
+                <a href="<?php echo $url;?>/administrador/seccion/cerrar.php">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
