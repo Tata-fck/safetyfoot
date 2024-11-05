@@ -1,6 +1,6 @@
 <?php include("../template/cabecera.php")?>
 
-<link rel="stylesheet" href="css/contacto.css">
+<link rel="stylesheet" href="css/productos.css">
 
 <body>
     <div class="cont-form">
