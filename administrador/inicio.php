@@ -2,4 +2,4 @@
 
 Hola Mundo
 
-<?php include("template/pie.html");?>
+<?php include("template/pie.php");?>

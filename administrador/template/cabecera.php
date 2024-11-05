@@ -16,14 +16,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=EB+Garamond:wght@400..800&family=Spinnaker&display=swap" rel="stylesheet">
 
     <?php $url="http://".$_SERVER['HTTP_HOST']."/safetyfoot" ?>
+    <link rel="stylesheet" href="<?php echo $url;?>/administrador/template/css/cabecera.css">
     
     <!-- Título de la página -->
     <title>Safety FootPrint</title>
 
-    <link rel="stylesheet" href="template/css/cabecera.css">
     <div class="contenedor">
         <!-- Logo -->
-        <a href="inicio.html"><img src="../images/logo.png" alt="Safety Footprint Logo" class="logo"></a>
+        <a href="inicio.html"><img src="<link rel="stylesheet" href="<?php echo $url;?>/images/logo.png" alt="Safety Footprint Logo" class="logo"></a>
         <h2 class="titulo">SAFETY FOOTPRINT</h2>
 
         <!-- Menú de Navegación -->

@@ -1,5 +1,5 @@
 <!--::::Pie de Pagina::::::-->
-<link rel="stylesheet" href="template/css/pie.css">
+<link rel="stylesheet" href="<?php echo $url;?>/administrador/template/css/pie.css">
 
 <footer class="pie-pagina">
     <div class="grupo-1">
