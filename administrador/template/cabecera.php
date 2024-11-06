@@ -28,7 +28,7 @@
         <h2 class="titulo">SAFETY FOOTPRINT</h2>
 
         <!-- Menú de Navegación -->
-        <nav>
+        <nav class="menu-hdr">
             <!-- Botón Moviles -->
         <input type="checkbox" id="menu-toggle" class="menu-toggle">
         <label for="menu-toggle" class="menu-icon">

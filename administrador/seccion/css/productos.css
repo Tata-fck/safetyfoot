@@ -9,32 +9,45 @@ body {
     
 }
 
+.tit-bd{
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+    font-size: 2.5rem;
+}
+
 .cont-form{
-    width: 70%;
+    width: 80%;
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-gap: 10%;
     margin-top: 10vh;
     flex: 1;
 }
-.cont-form h2{
-    margin-bottom: 2vh;
-    font-size: 2.5rem;
-}
-.cont-form p{
-    font-size: 1.3rem;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-}
-.cont-form a{
-    font-size: 1.2rem;
-    display: inline-block;
-    text-decoration: none;
+
+.menu-bd{
+    flex-grow: 1;
+    text-align: center;
     width: 100%;
-    margin-bottom: 0.5vh;
-    color: black;
-    font-weight: 700;
 }
+
+.menu-itms {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    order: 1;
+    flex-direction: row;
+    text-align: center;
+}
+
+.menu-itms a {
+    color: #383838;
+    text-decoration: none;
+    margin: 0 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    position: relative;
+}
+
 .cont-form a i{
     color: orange;
     margin-right: 10px;
@@ -56,6 +69,46 @@ body {
     overflow: hidden; /* Oculta las barras de desplazamiento */
 }
 
+.form-img {
+    display: none; /* Oculta el input de archivo original */
+    width: 50%;
+}
+
+/* SELECCION DE IMAGENES*/
+.previsualizacion{
+    width: 100%;
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.box{
+    width: 100%;
+    align-items: center;
+
+}
+
+.box img{
+    margin-left: 15px;
+    width: 90%;
+}
+
+.file-label {
+    display: inline-block;
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #45a049; /* Color de fondo al pasar el ratón */
+}
+
 .cont-form .btn-enviar{
     padding: 15px;
     font-size: 16px;
@@ -72,6 +125,66 @@ body {
     background: #e39403;
 }
 
+/*TABLA DE CONTENIDO*/
+.contenido-table{
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.contenido-table thead tr{
+    background-color: #943838;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.contenido-table th,
+.contenido-table td{
+    padding: 10px 13px;
+    text-align: center;
+}
+
+.contenido-table tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+.contenido-table tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+
+.contenido-table tbody tr:last-of-type{
+    border-bottom: 2px solid #943838;
+}
+
+.contenido-table tbody tr.active-row{
+    font-weight: bold;
+    color: #943838;
+}
+
+.img-table{
+    width: 7em;
+}
+
+.btn-slct{
+    padding: 5px;
+    font-size: 17px;
+    border: none;
+    outline: 0px;
+    background: #da9f93;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.btn-slct:hover{
+    background: #8b4e41;
+}
+
 footer{
     margin-top: 20vh;
 }
@@ -80,6 +193,10 @@ footer{
 
 /*------slide-1-----------*/
 @media (max-width: 830px) {
+    .tit-bd{
+        font-size: 2rem;
+    }
+
     .cont-form{
         width: 90%;
         grid-template-columns: repeat(1,1fr);
@@ -87,5 +204,9 @@ footer{
 
     .cont-form p{
         font-size: 1.2rem;
+    }
+
+    .img-table{
+        width: 5rem;
     }
 }

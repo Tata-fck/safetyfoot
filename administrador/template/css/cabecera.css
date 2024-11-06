@@ -38,7 +38,7 @@ header .contenedor {
     white-space: nowrap;
 }
 
-nav {
+.menu-hdr {
     flex-grow: 1;
     text-align: right;
 }
@@ -67,7 +67,7 @@ nav {
     transition: all 0.3s ease; /* Transición suave para el menú */
 }
 
-nav a {
+.menu-hdr a {
     color: #e7e7e7;
     text-decoration: none;
     margin: 0 15px;
@@ -77,11 +77,11 @@ nav a {
     transition: color 0.3s ease; /* Agregar transición de color */
 }
 
-nav a:hover {
+.menu-hdr a:hover {
     color: #ffcc00; /* Cambiar color al pasar el cursor */
 }
 
-nav a::before {
+.menu-hdr a::before {
     content: "";
     position: absolute;
     bottom: -3px;
@@ -93,7 +93,7 @@ nav a::before {
     transform: translateX(-50%);
 }
 
-nav a:hover::before {
+.menu-hdr a:hover::before {
     width: 100%;
 }
 
@@ -134,13 +134,13 @@ nav a:hover::before {
         padding-left: 20px;
     }
 
-    nav {
+    .menu-hdr {
         display: flex;
         justify-content: right; /* Centra el contenido del menú */
         width: 100%; /* Asegura que el nav ocupe el espacio completo */
     }
 
-    nav a {
+    .menu-hdr a {
         margin: 5px 10px;
         font-size: 0.9rem;
         display: block;
@@ -180,7 +180,7 @@ nav a:hover::before {
         display: none; /* Oculta el título en pantallas pequeñas */
     }
 
-    nav a {
+    .menu-hdr a {
         font-size: 0.8rem;
     }
 }
