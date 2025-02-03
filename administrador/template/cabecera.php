@@ -1,3 +1,14 @@
+<?php 
+session_start();
+    if(!isset($_SESSION['usuario'])){
+        header("Location:../index.php");
+    }else{
+        if($_SESSION['usuario']=="ok"){
+            $nombreUsuario=$_SESSION["nombreUsuario"];
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!-- header.html -->
@@ -19,7 +30,7 @@
 
     <link rel="stylesheet" href="<?php echo $url;?>/administrador/template/css/cabecera.css">
     
-    <!-- Título de la página -->
+    <!-- Título de la página -->   
     <title>Safety FootPrint</title>
 
     <div class="contenedor">

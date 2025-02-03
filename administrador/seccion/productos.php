@@ -23,6 +23,8 @@ switch($accion){
             
         $sentenciaSQL->bindParam(':imagen',$nombreArchivo);
         $sentenciaSQL->execute();
+
+        header("Location:productos.php");
         break;
 
     case "modificar":
@@ -55,9 +57,10 @@ switch($accion){
             $sentenciaSQL->execute();
         }
 
+        header("Location:productos.php");
         break;
     case "cancelar":
-        echo "";
+        header("Location:productos.php");
         break;
     case "select":
         $sentenciaSQL=$conexion->prepare("SELECT * FROM zapato WHERE id=:id");
@@ -87,6 +90,7 @@ switch($accion){
         $sentenciaSQL->bindParam(':id',$txtID);
         $sentenciaSQL->execute();
 
+        header("Location:productos.php");
         break;
 }
 
@@ -115,14 +119,14 @@ $listaZapatos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </nav>
             <form method="POST" enctype="multipart/form-data">
-            <input type="text" value="<?php echo $txtID;?>" name="txtID" placeholder="ID" class="campo">
-            <input type="text" value="<?php echo $txtNombre;?>" name="txtNombre" placeholder="Nombre Calzado" class="campo">
+            <input type="text" class="campo" required readonly class="" value="<?php echo $txtID;?>" name="txtID" placeholder="ID">
+            <input type="text" required class="campo" value="<?php echo $txtNombre;?>" name="txtNombre" placeholder="Nombre Calzado">
             <!input type="file" value="<?php echo $txtImagen;?>" name="txtImagen" id="txtImagen" placeholder="Imagen de Presentacion" 
             accept=".jpg, .jpeg, .png" class="form-img">
             <div class="previsualizacion">
                 <div class="box">
                     <label for="txtImagen" class="file-label">Seleccionar Imagen</label>
-                    <input type="file" name="txtImagen" id="txtImagen" accept=".jpg, .jpeg, .png" class="form-img">
+                    <input type="file" required class="form-img" name="txtImagen" id="txtImagen" accept=".jpg, .jpeg, .png">
                 </div>
 
                 <div class="box">
@@ -133,9 +137,9 @@ $listaZapatos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
 
-            <input type="submit" name="accion" value="agregar" class="btn-enviar">
-            <input type="submit" name="accion" value="modificar" class="btn-enviar">
-            <input type="submit" name="accion" value="borrar" class="btn-enviar">
+            <input type="submit" name="accion" <?php echo ($accion=="select")?"disabled":"";?> value="agregar" class="btn-enviar">
+            <input type="submit" name="accion" <?php echo ($accion!="select")?"disabled":"";?> value="modificar" class="btn-enviar">
+            <input type="submit" name="accion" <?php echo ($accion!="select")?"disabled":"";?> value="cancelar" class="btn-enviar">
         </form>
         </div>
 
@@ -164,6 +168,7 @@ $listaZapatos=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                         <form method="post">
                             <input type="hidden" name="txtID" id="txtID" value="<?php echo $zapato['id'];?>"/>
                             <input type="submit" name="accion" value="select" class="btn-slct"/>
+                            <input type="submit" name="accion" value="borrar" class="btn-borrar"/>
                         </form>
                     </td>
                 </tr>
