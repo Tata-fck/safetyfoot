@@ -153,7 +153,10 @@ const btnL = document.querySelector(".galery-btn-l"),
 let op = 0,
     count = 0,
     IntervalSlide,
-    widthitem = 100 / item.length; 
+    widthitem = 200 / item.length; 
+
+// Imprimir el valor de item.length en la consola
+console.log('Número de elementos en la galería:', item.length);
 
 btnL.addEventListener("click", () => { moveLeft(), resetSlide() });
 btnR.addEventListener("click", () => { moveRight(), resetSlide() });
@@ -171,7 +174,7 @@ function resetSlide() {
 }
 
 function moveRight() {
-    if (count >= item.length - 1) {
+    if (count >= item.length - Math.floor(items.offsetWidth / item[0].offsetWidth)) {
         count = 0;
         op = 0;
         items.style.transform = `translateX(-${op}%)`;
@@ -179,57 +182,24 @@ function moveRight() {
         return;
     }
     count++;
-    op += widthitem;
+    op = count * widthitem;
     items.style.transform = `translateX(-${op}%)`;
     items.style.transition = "all ease .6s";
 }
 
 function moveLeft() {
-    count--;
-    if (count < 0) {
-        count = item.length - 1;
-        op = widthitem * (item.length - 1);
+    if (count <= 0) {
+        count = item.length - Math.floor(items.offsetWidth / item[0].offsetWidth);
+        op = widthitem * count;
         items.style.transform = `translateX(-${op}%)`;
         items.style.transition = "none";
         return;
     }
-    op -= widthitem;
+    count--;
+    op = count * widthitem;
     items.style.transform = `translateX(-${op}%)`;
     items.style.transition = "all ease .6s";
 }
 
-// Inicializar el auto-slide
+// Iniciar el carrusel automáticamente
 startSlide();
-
-// Variables para manejar el deslizamiento táctil
-let startX = 0;
-let currentX = 0;
-let isDragging = false;
-
-// Event listeners para el deslizamiento táctil
-items.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    items.style.transition = "none"; // Deshabilitar la transición mientras se arrastra
-});
-
-items.addEventListener('touchmove', (e) => {
-    if (isDragging) {
-        currentX = e.touches[0].clientX;
-        const diffX = currentX - startX;
-        items.style.transform = `translateX(calc(-${op}% + ${diffX}px))`;
-    }
-});
-
-items.addEventListener('touchend', (e) => {
-    isDragging = false;
-    const diffX = currentX - startX;
-    if (diffX > 50) { // Deslizar a la derecha
-        moveLeft();
-    } else if (diffX < -50) { // Deslizar a la izquierda
-        moveRight();
-    } else { // Volver a la posición original
-        items.style.transform = `translateX(-${op}%)`;
-        items.style.transition = "all ease .6s";
-    }
-});
