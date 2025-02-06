@@ -202,7 +202,7 @@ footer{
     margin-top: 20vh;
 }
 
-/*-----------Productos-----------------*/
+/*-----------Productos-1-----------------*/
 .t-galeria {
     display: flex;
     align-items: center;
@@ -234,24 +234,27 @@ footer{
 
 .container-galeria {
     position: relative;
-    width: 60%;
+    width: 80%;
     height: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: flex; 
     overflow: hidden;
 }
 
 .items {
-    width: 1250%;
-    height: auto;
     display: flex;
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
     transition: transform 0.6s ease;
 }
 
-.item{
-    border-radius: 10px;
-    background-color: #eeeeee8d;
-    margin: 10px; /* Añadir margen alrededor de cada item */
+.item {
+    flex: 0 0 300px; /* Ajusta el tamaño según sea necesario */
+    height: 400px; /* Ajusta el tamaño según sea necesario */
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .item:hover{
@@ -259,12 +262,12 @@ footer{
 }
 
 .item img{
-    width:100%;
+    width:99%;
     height: auto;
     object-fit: scale-down;
     padding: 20%;
-    border-radius: 30px 30px 0 0;
-    transition: all .5s;
+    border-radius: 30px 30px 30px 30px;
+    transition: transform .5s, width .5s, height .5s; 
     
 }
 
@@ -277,25 +280,28 @@ footer{
 }
 
 .info-product{
-    padding: 15px 30px;
-    line-height: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    margin-top: auto;
 }
 
 .price{
-    font-size: 18px;
-    font-weight: 900;
+    font-size: 20px;
 }
 
+
 .info-product button{
+    padding: 15px;
+    font-size: 16px;
     border: none;
-    background: none;
-    background-color: #000;
-    color: #fff;
-    padding: 15px 10px;
+    outline: 0px;
+    background: orange;
+    color: white;
+    border-radius: 3px;
     cursor: pointer;
+    transition: all .5s ease;
+}
+
+.info-product button:hover{
+    background: #e39403;
 }
 
 .galery-btn-l,
@@ -396,7 +402,7 @@ footer{
         height: auto;
     }
 
-    /*----galeria----*/
+    /*--------productos-1--------*/
     .t-galeria{
         width: 90%;
     }
@@ -415,7 +421,24 @@ footer{
 
     .item{
         margin: 4px;
+        flex: 0 0 200px; /* Ajusta el tamaño según sea necesario */
+        height: 350px; /* Ajusta el tamaño según sea necesario */
     }
+
+     /* ------productos-2------ 
+    .container-items{
+        width: 90%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .item {
+        width: 100%; 
+        height: 200x; 
+        margin: 10px; 
+        padding: 10px; 
+        box-sizing: border-box; 
+    }
+    */
 
     /*----envio----*/
     .container-envio .columna-envio{
