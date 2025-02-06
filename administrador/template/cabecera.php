@@ -48,8 +48,7 @@ session_start();
         </label>
 
             <div class="menu-items" id="menu-items">
-                <a href="<?php echo $url;?>/administrador/inicio.php" class="activo">Inicio</a>
-                <a href="<?php echo $url;?>/administrador/seccion/productos.php">Catalogo</a>
+                <a href="<?php echo $url;?>/administrador/seccion/productos.php">Administrador</a>
                 <a href="<?php echo $url;?>/inicio.php">Ver Web</a>
                 <a href="<?php echo $url;?>/administrador/seccion/cerrar.php">Cerrar Sesion</a>
             </div>
