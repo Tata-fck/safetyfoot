@@ -9,6 +9,10 @@ root {
 	box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+}
+
 header {
     background: url('../images/fondo-barra.svg') no-repeat center;
     background-size: cover;
@@ -24,6 +28,49 @@ header .contenedor {
     align-items: center;
     width: 90%;
     margin: auto;
+    padding: 7px;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+    transition: width 0.3s ease; /* Agrega transición para cambio de tamaño */
+}
+
+.titulo {
+    font-size: 2rem;            
+    margin-left: 15px;
+    white-space: nowrap;
+}
+
+.menu-items a{
+    color: #e7e7e7;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    position: relative;
+    transition: color 0.3s ease; /* Agregar transición de color */
+}
+
+.menu-items a:hover {
+    color: #ffcc00; /* Cambiar color al pasar el cursor */
+}
+
+.menu-items a::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #ffcc00; /* Color de la línea de la animación */
+    transition: all 0.3s ease; /* Agregar transición de la línea */
+    transform: translateX(-50%);
+}
+
+.menu-items a:hover::before {
+    width: 100%;
 }
 
 body {
@@ -35,37 +82,65 @@ body {
     align-items: center;
 }
 
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 .principal{
+    width: 50%;
     margin-top: 5%;
     margin-left:25%;
     margin-right: 25%;
-    width: 50%;
-    /*background-color:blueviolet;*/
-    margin-bottom: 300px;
+    margin-bottom: 50px;
 }
 
 .principal h2{
     text-align: center;
+    margin-bottom: 15px;
 }
 .mensaje{
     text-align: center;
     color: red;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-form .campo{
+.campo{
     width: 100%;
     padding: 15px 10px;
     font-size: 1rem;
     border: 1px solid #dbdbdb;
     margin-bottom: 20px;
     border-radius: 3px;
+}
+
+.contra-input {
+    position: relative;
+    width: 100%;
+}
+
+.boton-ojo {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.eye-icon {
+    width: 24px;
+    height: 24px;
 }
 
 .btn-enviar{
