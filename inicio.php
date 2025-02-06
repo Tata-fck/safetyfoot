@@ -1,4 +1,10 @@
-<?php include("elements/header/header.html");?>
+<?php include("elements/header/header.html");
+
+include("administrador/cofig/bd.php");
+$sentenciaSQL = $conexion->prepare("SELECT * FROM zapato LIMIT 7");
+$sentenciaSQL->execute();
+$listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!-- Enlaces a hojas de estilo -->
  <link rel="stylesheet" href="css/inicio.css">
@@ -29,7 +35,7 @@
         </div>
     </div>
 
-    <!--Galeria-->
+    <!--Productos-1-->
     <div class="t-galeria">
         <h1 class="t-ofertas"> Nuestras Ofertas </h1>
     </div>
@@ -37,123 +43,21 @@
         <div class="galery-btn-l"><img src="images/inicio/galery-flecha-l.svg"></div>
         <div class="container-galeria">
             <div class="items" id="galery">
+            <?php foreach ($listaProductos as $producto) { ?>
                 <div class="item">
                     <figure>
                         <img
-                            src="images/catalogo/bota.png"
+                            src="./img/<?php echo $producto['imagen']; ?>"
                             alt="producto"
                         />
                     </figure>
                     <div class="info-product">
-                        <h2>BOTA 1</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
+                        <h2><?php echo $producto['nombre']; ?></h2>
+                        <p class="price">$<?php echo $producto['precio']; ?></p>
+                        <button onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Añadir al carrito</button>
                     </div>
                 </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 2</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 3</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 4</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 5</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 5</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 6</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 7</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="images/catalogo/bota.png"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2>BOTA 8</h2>
-                        <p class="price">$100</p>
-                        <button>Añadir al carrito</button>
-                    </div>
-                </div>
+            <?php } ?> 
             </div>
         </div>
         <div class="galery-btn-r"><img src="images/inicio/galery-flecha-r.svg"></div>
@@ -179,37 +83,7 @@
             </div>
         </div>
     </div>
-
-    <!--Carrusel 2-->
-    <!--<div class="carrusel">
-        <div class="container-carrusel">
-            <div class="carruseles" id="slider">
-                <section class="slider-section">
-                    <img src="images/inicio/carrusel-1.jpg">
-                    <div class="texto">
-                        <h2>DIAPO 1</h2>
-                        <p>no se que poner aqui X D D D D D D D D D D D D D D</p>
-                    </div>
-                </section>
-                <section class="slider-section">
-                    <img src="images/inicio/carrusel-2.jpg">
-                    <div class="texto">
-                        <h2>DIAPO 2</h2>
-                        <p>no se que poner aqui XDDDDDDDDDDDDDD</p>
-                    </div>
-                </section>
-                <section class="slider-section">
-                    <img src="images/inicio/carrusel-3.jpg">
-                    <div class="texto">
-                        <h2>DIAPO 3</h2>
-                        <p>no se que poner aqui XDDDDDDDDDDDDDD</p>
-                    </div>
-                </section>
-            </div>
-            <div class="btn-l"><img src="images/inicio/flecha-L.svg"></div>
-            <div class="btn-r"><img src="images/inicio/flecha-R.svg"></div>
-        </div>
-    </div>-->
-    </body>
+    <script src="javascript/inicio.js"></script> 
+</body>
 
 <?php include("elements/footer/footer.html");?>
