@@ -1,24 +1,34 @@
-<?php include("elements/header/header.html");?>
+<?php include("elements/header/header.html");
+
+include("administrador/cofig/bd.php");
+$sentenciaSQL = $conexion->prepare("SELECT * FROM zapato");
+$sentenciaSQL->execute();
+$listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!-- Enlaces a hojas de estilo -->
 <link rel="stylesheet" href="css/catalogo.css">
 
 <body>
+<div class="main-content">
     <div class="container-items">
+        <?php foreach ($listaProductos as $producto) { ?>
         <div class="item">
             <figure>
                 <img
-                    src="images/catalogo/bota.png"
+                    src="./img/<?php echo $producto['imagen']; ?>"
                     alt="producto"
                 />
             </figure>
             <div class="info-product">
-                <h2>BOTA 1</h2>
-                <p class="price">$100</p>
-                <button>Añadir al carrito</button>
+                <h2><?php echo $producto['nombre']; ?></h2>
+                <p class="price">$<?php echo $producto['precio']; ?></p>
+                <button class="ver-p" onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Ver detalles</button>
             </div>
-        </div>   
+        </div>  
+        <?php } ?> 
     </div>
+</div>
 </body>
 
 <?php include("elements/footer/footer.html");?>
