@@ -1,65 +1,111 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background: var(--fondo);
     font-family: 'Open Sans', sans-serif;
-    margin: 0;
+    margin: 0; /* Elimina márgenes predeterminados */
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 /*CUERPO DE CATALOGO*/
 .container-items{
     width: 70%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
-.item{
-    border-radius: 10px;
+.item {
+    width: 100%; /* ancho */
+    margin: 10px; 
+    padding: 10px; 
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total del elemento */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .item:hover{
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
 }
 
-.item img{
-    width: 100%;
-    height: auto;
-    object-fit: scale-down;
-    padding: 20%;
-    border-radius: 30px 30px 0 0;
-    transition: all .5s;
-    
+.item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    object-fit: contain; /* Ajusta la imagen para que quepa en el contenedor sin recortarse */
+    transform: translate(-50%, -50%); /* Centra la imagen */
+    border-radius: 30px 30px 30px 30px;
+    transition: transform .5s, width .5s, height .5s; 
+    /* Ajusta la transición para la transformación, ancho y alto */
 }
 
 .item figure{
+    width: 100%;
+    padding-top: 100%; /* Mantiene un espacio cuadrado */
+    position: relative;
     overflow: hidden;
+    align-items: center;
 }
 
-.item:hover img{
-    transform: scale(1.2);
+.item:hover img {
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(0.75 ); /* Escala la imagen para ocupar el 100% del contenedor */
 }
 
 .info-product{
-    padding: 15px 30px;
-    line-height: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin-top: auto;
 }
 
 .price{
-    font-size: 18px;
-    font-weight: 900;
+    font-size: 20px;
 }
 
-.info-product button{
+.ver-p {
+    padding: 15px;
+    font-size: 16px;
     border: none;
-    background: none;
-    background-color: #000;
-    color: #fff;
-    padding: 15px 10px;
+    outline: 0px;
+    background: orange;
+    color: white;
+    border-radius: 3px;
     cursor: pointer;
+    transition: all .5s ease;
+}
+
+.ver-p:hover{
+    background: #e39403;
+}
+
+/*--------------DISPOSITIVOS MOVILES--------------------*/
+@media (max-width: 830px) {
+
+    .container-items{
+        width: 90%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .item {
+        width: 100%; /* ancho*/
+        height: 200x; /*altura */
+        margin: 10px; 
+        padding: 10px; 
+        box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total del elemento */
+    }
 }
