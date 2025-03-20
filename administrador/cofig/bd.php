@@ -10,4 +10,6 @@ try{
 }catch(Exception $ex){
     echo $ex->getMessage();
 }
+
+$nomBD="productos";
 ?>

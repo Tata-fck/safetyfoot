@@ -1,7 +1,7 @@
 <?php include("elements/header/header.html");
 
 include("administrador/cofig/bd.php");
-$sentenciaSQL = $conexion->prepare("SELECT * FROM zapato LIMIT 7");
+$sentenciaSQL = $conexion->prepare("SELECT * FROM $nomBD LIMIT 7");
 $sentenciaSQL->execute();
 $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
