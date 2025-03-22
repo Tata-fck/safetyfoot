@@ -1,4 +1,6 @@
 <?php 
+include("cofig/bd.php");
+
 session_start();
 
 // Destruir la sesión si se recarga la página
@@ -7,22 +9,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     session_destroy();
 }
 
-if($_POST){
-    if(($_POST['usuario']=="alex")&&($_POST['contrasenia']=="sistema")){
-        $_SESSION['usuario']="ok";
-        $_SESSION['nombreUsuario']=$_SESSION['usuario'];
-        header('Location:seccion/productos.php');
-    }else{
-        $mensaje="Error: El usuario y/o contraseña son incorrectos";
-    }  
-}  
+if ($_POST) {
+    $usuario = $_POST['usuario'];
+    $contrasenia = $_POST['contrasenia'];
+
+    // Consulta a la base de datos con PDO
+    $stmt = $conexion->prepare("SELECT * FROM admin WHERE usuario = :usuario AND contrasenia = :contrasenia");
+    $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+    $stmt->bindParam(':contrasenia', $contrasenia, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($fila) {
+        $_SESSION['usuario'] = "ok";
+        $_SESSION['nombreUsuario'] = $fila['usuario'];
+        header('Location: seccion/productos.php');
+        exit();
+    } else {
+        $mensaje = "Error: El usuario y/o contraseña son incorrectos";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <!-- header.html -->
 <header>
 
-    <?php $url="http://".$_SERVER['HTTP_HOST']."/safetyfoot" ?>
+    <?php $url="http://".$_SERVER['HTTP_HOST'] ?>
     <!-- Meta información -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,15 +50,15 @@ if($_POST){
     
     <link rel="stylesheet" href="<?php echo $url;?>/administrador/index.css">
     <!-- Título de la página -->
-    <title>Safety FootPrint</title>
+    <title>grupo CAPI</title>
     <div class="contenedor">
         <!-- Logo -->
         <a href="inicio.html"><img src="<?php echo $url;?>/images/logo.png" alt="Safety Footprint Logo" class="logo"></a>
-        <h2 class="titulo">SAFETY FOOTPRINT</h2>
+        <h2 class="titulo">GRUPO CAPI</h2>
 
         <!-- Menú de Navegación -->
             <div class="menu-items" id="menu-items">
-                <a href="<?php echo $url;?>/inicio.php">Ver Web</a>
+                <a href="<?php echo $url;?>/default.php">Ver Web</a>
             </div>
     </div>
 

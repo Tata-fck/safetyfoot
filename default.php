@@ -1,7 +1,15 @@
 <?php include("elements/header/header.html");
 
 include("administrador/cofig/bd.php");
-$sentenciaSQL = $conexion->prepare("SELECT * FROM $nomBD LIMIT 7");
+
+$sentenciaSQL = $conexion->prepare(
+    "SELECT p.id, p.nombre, p.precio, 
+           (SELECT i.nom_archivo FROM imagenes i 
+            WHERE i.id_producto = p.id 
+            ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
+    FROM productos p 
+    LIMIT 7"
+);
 $sentenciaSQL->execute();
 $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -35,7 +43,7 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!--Productos-1-->
+    <!--Ofertas-->
     <div class="t-galeria">
         <h1 class="t-ofertas"> Nuestras Ofertas </h1>
     </div>

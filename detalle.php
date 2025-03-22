@@ -3,12 +3,20 @@
 <?php 
 include("administrador/cofig/bd.php");
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = isset($_GET['id']) ? $_GET['id'] : '';
 
-$sentenciaSQL = $conexion->prepare("SELECT * FROM zapato WHERE id = :id");
-$sentenciaSQL->bindParam(':id', $id);
+$sentenciaSQL = $conexion->prepare("
+    SELECT p.*, 
+           (SELECT i.nom_archivo FROM imagenes i 
+            WHERE i.id_producto = p.id 
+            ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
+    FROM productos p 
+    WHERE p.id = :id
+");
+$sentenciaSQL->bindParam(':id', $id, PDO::PARAM_STR);
 $sentenciaSQL->execute();
 $producto = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+
 
 if (!$producto) {
     echo "Producto no encontrado";
@@ -24,32 +32,28 @@ if (!$producto) {
 			</div>
 			<div class="container-info-product">
 				<div class="container-price">
-					<b class = "nombre"><?php echo $producto['nombre']; ?></b><br>
+					<b class = "nombre"><?php echo $producto['marca'] . " " . $producto['nombre']; ?></b><br>
                     $<?php echo $producto['precio']; ?>
 				</div>
 
 				<div class="container-details-product">
-					<div class="form-group">
-						<label for="colour">Color</label>
-						<select name="colour" id="colour">
-							<option disabled selected value="">
-								Escoge una opción
-							</option>
-							<option value="rojo">Rojo</option>
-							<option value="blanco">Blanco</option>
-							<option value="beige">Beige</option>
-						</select>
-					</div>
 					<div class="form-group">
 						<label for="size">Talla</label>
 						<select name="size" id="size">
 							<option disabled selected value="">
 								Escoge una opción
 							</option>
-							<option value="40">40</option>
-							<option value="42">42</option>
-							<option value="43">43</option>
-							<option value="44">44</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+							<option value="32">32</option>
 						</select>
 					</div>
 					<button class="btn-clean">Limpiar</button>
@@ -111,29 +115,46 @@ if (!$producto) {
 
 		
 
-    <?php
-    $sentenciaSQL = $conexion->prepare("SELECT * FROM zapato LIMIT 5");
-    $sentenciaSQL->execute();
-    $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-    ?>
-			<h2>Productos Relacionados</h2>
-			<div class="container-items">
-        <?php foreach ($listaProductos as $zapato) { ?>
-        <div class="item">
-            <figure>
-                <img
-                    src="./img/<?php echo $zapato['imagen']; ?>"
-                    alt="producto"
-                />
-            </figure>
-            <div class="info-product">
-                <h2><?php echo $zapato['nombre']; ?></h2>
-                <p class="price"><?php echo $zapato['precio']; ?></p>
-                <button class="ver-p" onclick="window.location.href='detalle.php?id=<?php echo $zapato['id']; ?>'">Ver detalles</button>
-            </div>
-        </div>  
-        <?php } ?> 
+<?php
+	$sentenciaSQL = $conexion->prepare(
+		"SELECT p.id, p.nombre, p.precio, 
+			(SELECT i.nom_archivo FROM imagenes i 
+				WHERE i.id_producto = p.id 
+				ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
+		FROM productos p 
+		LIMIT 7"
+	);
+	$sentenciaSQL->execute();
+	$listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+?>
+	<!--Ofertas-->
+    <div class="t-galeria">
+        <h1 class="t-ofertas"> Productos Relacionados </h1>
     </div>
+    <div class="galeria">
+        <div class="galery-btn-l"><img src="images/inicio/galery-flecha-l.svg"></div>
+        <div class="container-galeria">
+            <div class="items" id="galery">
+            <?php foreach ($listaProductos as $producto) { ?>
+                <div class="item">
+                    <figure>
+                        <img
+                            src="./img/<?php echo $producto['imagen']; ?>"
+                            alt="producto"
+                        />
+                    </figure>
+                    <div class="info-product">
+                        <h2><?php echo $producto['nombre']; ?></h2>
+                        <p class="price">$<?php echo $producto['precio']; ?></p>
+                        <button onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Ver detalles</button>
+                    </div>
+                </div>
+            <?php } ?> 
+            </div>
+        </div>
+        <div class="galery-btn-r"><img src="images/inicio/galery-flecha-r.svg"></div>
+    </div>
+
 	</body>
 
     <?php include("elements/footer/footer.html"); ?>

@@ -14,7 +14,7 @@ session_start();
 <!-- header.html -->
 <header>
 
-    <?php $url="http://".$_SERVER['HTTP_HOST']."/safetyfoot" ?>
+    <?php $url="http://".$_SERVER['HTTP_HOST'] ?>
     <!-- Meta información -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,12 +31,12 @@ session_start();
     <link rel="stylesheet" href="<?php echo $url;?>/administrador/template/css/cabecera.css">
     
     <!-- Título de la página -->   
-    <title>Safety FootPrint</title>
+    <title>grupo CAPI</title>
 
     <div class="contenedor">
         <!-- Logo -->
         <a href="inicio.html"><img src="<?php echo $url;?>/images/logo.png" alt="Safety Footprint Logo" class="logo"></a>
-        <h2 class="titulo">SAFETY FOOTPRINT</h2>
+        <h2 class="titulo">grupo CAPI</h2>
 
         <!-- Menú de Navegación -->
         <nav class="menu-hdr">
@@ -49,7 +49,7 @@ session_start();
 
             <div class="menu-items" id="menu-items">
                 <a href="<?php echo $url;?>/administrador/seccion/productos.php">Administrador</a>
-                <a href="<?php echo $url;?>/inicio.php">Ver Web</a>
+                <a href="<?php echo $url;?>/default.php">Ver Web</a>
                 <a href="<?php echo $url;?>/administrador/seccion/cerrar.php">Cerrar Sesion</a>
             </div>
         </nav>
