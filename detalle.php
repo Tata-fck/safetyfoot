@@ -7,9 +7,8 @@ $id = isset($_GET['id']) ? $_GET['id'] : '';
 
 $sentenciaSQL = $conexion->prepare("
     SELECT p.*, 
-           (SELECT i.nom_archivo FROM imagenes i 
-            WHERE i.id_producto = p.id 
-            ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
+           (SELECT GROUP_CONCAT(i.nom_archivo ORDER BY i.num_archivo ASC) FROM imagenes i 
+            WHERE i.id_producto = p.id) AS imagenes
     FROM productos p 
     WHERE p.id = :id
 ");
@@ -22,13 +21,29 @@ if (!$producto) {
     echo "Producto no encontrado";
     exit;
 }
+
+$imagenes = explode(',', $producto['imagenes']);
 ?>
 
     <link rel="stylesheet" href="css/detalle.css" />
 <body>
 		<main>
 			<div class="container-img">
-                    <img src="./img/<?php echo $producto['imagen']; ?>" alt="producto" />
+				<div class="carrusel2">
+					<div class="container-carrusel2">
+						<div class="carruseles2" id="slider2">
+							<?php foreach ($imagenes as $imagen) { ?>
+								<section class="slider-section2">
+									<img src="./img/<?php echo $imagen; ?>" alt="producto" />
+								</section>
+							<?php } ?>
+						</div>
+						<div class="btn-l2"><img src="images/inicio/galery-flecha-l.svg"></div>
+						<div class="btn-r2"><img src="images/inicio/galery-flecha-r.svg"></div>
+					</div>
+				</div>
+
+				<!--<img src="./img/<?php echo $producto['imagen']; ?>" alt="producto" />-->
 			</div>
 			<div class="container-info-product">
 				<div class="container-price">
@@ -154,7 +169,8 @@ if (!$producto) {
         </div>
         <div class="galery-btn-r"><img src="images/inicio/galery-flecha-r.svg"></div>
     </div>
-
+	
+	<script src="javascript/detalle.js"></script> 
 	</body>
 
     <?php include("elements/footer/footer.html"); ?>
