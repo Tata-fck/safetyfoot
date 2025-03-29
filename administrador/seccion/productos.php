@@ -1,22 +1,23 @@
 <?php include("../template/cabecera.php")?>
 <?php 
+// Recuperar datos del formulario
 $txtID = isset($_POST['txtID']) ? $_POST['txtID'] : "";
 $txtMarca = isset($_POST['txtMarca']) ? $_POST['txtMarca'] : "";
 $txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : "";
 $txtPrecio = isset($_POST['txtPrecio']) ? $_POST['txtPrecio'] : "";
 $txtDescripcion = isset($_POST['txtDescripcion']) ? $_POST['txtDescripcion'] : "";
-$txtImagen = isset($_FILES['txtImagen']['name']) ? $_FILES['txtImagen']['name'] : "";
+// Se recibe el arreglo de imágenes (no modifiques la parte de previsualización)
+$txtImagen = isset($_FILES['txtImagen']) ? $_FILES['txtImagen'] : null;
 $accion = isset($_POST['accion']) ? $_POST['accion'] : "";
 
 include("../cofig/bd.php");
 
 switch($accion){
     case "agregar":
-        // Generar un ID único para el producto
-        if (empty($txtID)) {
-            $txtID = uniqid(); // Generar un ID único
+        // Si no se envía ID se genera uno único
+        if(empty($txtID)){
+            $txtID = uniqid();
         }
-    
         // Insertar el producto en la tabla `productos`
         $sentenciaSQL = $conexion->prepare("INSERT INTO productos (id, marca, nombre, precio, descripcion) 
             VALUES (:id, :marca, :nombre, :precio, :descripcion)");
@@ -26,58 +27,56 @@ switch($accion){
         $sentenciaSQL->bindParam(':precio', $txtPrecio);
         $sentenciaSQL->bindParam(':descripcion', $txtDescripcion);
         $sentenciaSQL->execute();
-    
-        // Usar el ID generado para asociar las imágenes
-        $ultimoID = $txtID;
-    
-        if ($txtImagen != "") {
-            $extension = pathinfo($_FILES["txtImagen"]["name"], PATHINFO_EXTENSION);
-            $tmpImagen = $_FILES["txtImagen"]["tmp_name"];
-    
-            // Contar cuántas imágenes ya existen para este producto
-            $sentenciaSQL = $conexion->prepare("SELECT COUNT(*) AS total FROM imagenes WHERE id_producto = :id_producto");
-            $sentenciaSQL->bindParam(':id_producto', $ultimoID);
-            $sentenciaSQL->execute();
-            $resultado = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
-            $numArchivo = $resultado['total'] + 1;
-    
-            // Generar el nombre del archivo
-            $nombreArchivo = $ultimoID . "-" . $numArchivo . "." . $extension;
-    
-            if ($tmpImagen != "") {
-                move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
-            }
-    
-            // Insertar el registro en la tabla `imagenes`
-            $sentenciaSQL = $conexion->prepare("INSERT INTO imagenes (nom_archivo, num_archivo, id_producto) VALUES (:nom_archivo, :num_archivo, :id_producto)");
-            $sentenciaSQL->bindParam(':nom_archivo', $nombreArchivo);
-            $sentenciaSQL->bindParam(':num_archivo', $numArchivo);
-            $sentenciaSQL->bindParam(':id_producto', $ultimoID);
-            $sentenciaSQL->execute();
-        }
-    
-        header("Location: productos.php");
-        break;  
 
+        // Procesar todas las imágenes subidas
+        if($txtImagen && !empty($txtImagen['name'][0])){
+            foreach($txtImagen['name'] as $i => $imagenName) {
+                if($imagenName != ""){
+                    $extension = pathinfo($imagenName, PATHINFO_EXTENSION);
+                    $tmpImagen = $txtImagen["tmp_name"][$i];
+                    
+                    // Contar las imágenes actuales para este producto (incluso si se vuelven a insertar)
+                    $sentenciaSQL = $conexion->prepare("SELECT COUNT(*) AS total FROM imagenes WHERE id_producto = :id_producto");
+                    $sentenciaSQL->bindParam(':id_producto', $txtID);
+                    $sentenciaSQL->execute();
+                    $resultado = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+                    $numArchivo = $resultado['total'] + 1;
+                    
+                    // Generar el nombre del archivo siguiendo las reglas
+                    $nombreArchivo = $txtID . "-" . $numArchivo . "." . $extension;
+                    
+                    if($tmpImagen != ""){
+                        move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
+                    }
+                    
+                    // Insertar la imagen en la tabla usando INSERT IGNORE para evitar duplicados
+                    $sentenciaSQL = $conexion->prepare("INSERT IGNORE INTO imagenes (nom_archivo, num_archivo, id_producto) VALUES (:nom_archivo, :num_archivo, :id_producto)");
+                    $sentenciaSQL->bindParam(':nom_archivo', $nombreArchivo);
+                    $sentenciaSQL->bindParam(':num_archivo', $numArchivo);
+                    $sentenciaSQL->bindParam(':id_producto', $txtID);
+                    $sentenciaSQL->execute();
+                }
+            }
+        }
+        header("Location: productos.php");
+        break;
+        
     case "modificar":
-        // Procesar las imágenes marcadas para eliminación
-        if (!empty($_POST['imagenesParaEliminar'])) {
+        // Procesar imágenes marcadas para eliminación
+        if(!empty($_POST['imagenesParaEliminar'])){
             $imagenesParaEliminar = explode(',', $_POST['imagenesParaEliminar']);
-            foreach ($imagenesParaEliminar as $imagen) {
-                // Eliminar el archivo de imagen del sistema de archivos
+            foreach($imagenesParaEliminar as $imagen){
                 $rutaImagen = "../../img/" . $imagen;
-                if (file_exists($rutaImagen)) {
+                if(file_exists($rutaImagen)){
                     unlink($rutaImagen);
                 }
-    
-                // Eliminar el registro de la imagen de la tabla `imagenes`
                 $sentenciaSQL = $conexion->prepare("DELETE FROM imagenes WHERE nom_archivo = :nom_archivo");
                 $sentenciaSQL->bindParam(':nom_archivo', $imagen);
                 $sentenciaSQL->execute();
             }
         }
-    
-        // Actualizar los datos del producto
+        
+        // Actualizar datos del producto
         $sentenciaSQL = $conexion->prepare("UPDATE productos SET marca = :marca, nombre = :nombre, precio = :precio, descripcion = :descripcion WHERE id = :id");
         $sentenciaSQL->bindParam(':id', $txtID);
         $sentenciaSQL->bindParam(':nombre', $txtNombre);
@@ -85,39 +84,40 @@ switch($accion){
         $sentenciaSQL->bindParam(':precio', $txtPrecio);
         $sentenciaSQL->bindParam(':descripcion', $txtDescripcion);
         $sentenciaSQL->execute();
-    
-        // Procesar nuevas imágenes subidas
-        if (!empty($_FILES['txtImagen']['name'])) {
-            $extension = pathinfo($_FILES["txtImagen"]["name"], PATHINFO_EXTENSION);
-            $tmpImagen = $_FILES["txtImagen"]["tmp_name"];
-    
-            // Contar cuántas imágenes ya existen para este producto
-            $sentenciaSQL = $conexion->prepare("SELECT COUNT(*) AS total FROM imagenes WHERE id_producto = :id_producto");
-            $sentenciaSQL->bindParam(':id_producto', $txtID);
-            $sentenciaSQL->execute();
-            $resultado = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
-            $numArchivo = $resultado['total'] + 1;
-    
-            // Generar el nombre del archivo
-            $nombreArchivo = $txtID . "-" . $numArchivo . "." . $extension;
-    
-            if ($tmpImagen != "") {
-                move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
+        
+        // Procesar nuevas imágenes subidas (se reinsertan todas usando INSERT IGNORE)
+        if($txtImagen && !empty($txtImagen['name'][0])){
+            foreach($txtImagen['name'] as $i => $imagenName) {
+                if($imagenName != ""){
+                    $extension = pathinfo($imagenName, PATHINFO_EXTENSION);
+                    $tmpImagen = $txtImagen["tmp_name"][$i];
+                    
+                    // Contar las imágenes actuales para este producto
+                    $sentenciaSQL = $conexion->prepare("SELECT COUNT(*) AS total FROM imagenes WHERE id_producto = :id_producto");
+                    $sentenciaSQL->bindParam(':id_producto', $txtID);
+                    $sentenciaSQL->execute();
+                    $resultado = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+                    $numArchivo = $resultado['total'] + 1;
+                    
+                    $nombreArchivo = $txtID . "-" . $numArchivo . "." . $extension;
+                    
+                    if($tmpImagen != ""){
+                        move_uploaded_file($tmpImagen, "../../img/" . $nombreArchivo);
+                    }
+                    
+                    // Insertar la imagen utilizando INSERT IGNORE
+                    $sentenciaSQL = $conexion->prepare("INSERT IGNORE INTO imagenes (nom_archivo, num_archivo, id_producto) VALUES (:nom_archivo, :num_archivo, :id_producto)");
+                    $sentenciaSQL->bindParam(':nom_archivo', $nombreArchivo);
+                    $sentenciaSQL->bindParam(':num_archivo', $numArchivo);
+                    $sentenciaSQL->bindParam(':id_producto', $txtID);
+                    $sentenciaSQL->execute();
+                }
             }
-    
-            // Insertar el registro en la tabla `imagenes`
-            $sentenciaSQL = $conexion->prepare("INSERT INTO imagenes (nom_archivo, num_archivo, id_producto) VALUES (:nom_archivo, :num_archivo, :id_producto)");
-            $sentenciaSQL->bindParam(':nom_archivo', $nombreArchivo);
-            $sentenciaSQL->bindParam(':num_archivo', $numArchivo);
-            $sentenciaSQL->bindParam(':id_producto', $txtID);
-            $sentenciaSQL->execute();
         }
-    
         header("Location: productos.php");
         break;
-
+        
     case "cancelar":
-        // Limpiar las variables del formulario
         $txtID = "";
         $txtMarca = "";
         $txtNombre = "";
@@ -125,88 +125,74 @@ switch($accion){
         $txtDescripcion = "";
         $txtImagen = "";
         $imagenes = [];
-
-        // Redirigir al usuario a la página principal
         header("Location: productos.php");
         break;
-
+        
     case "select":
-        // Obtener los datos del producto
+        // Obtener los datos del producto seleccionado
         $sentenciaSQL = $conexion->prepare("SELECT * FROM productos WHERE id = :id");
         $sentenciaSQL->bindParam(':id', $txtID);
         $sentenciaSQL->execute();
         $producto = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
-    
-        // Cargar los datos del producto en las variables
         $txtID = $producto['id'];
         $txtMarca = $producto['marca'];
         $txtNombre = $producto['nombre'];
         $txtPrecio = $producto['precio'];
         $txtDescripcion = $producto['descripcion'];
-    
-        // Obtener las imágenes asociadas al producto
+        
+        // Obtener imágenes asociadas al producto
         $sentenciaSQL = $conexion->prepare("SELECT nom_archivo FROM imagenes WHERE id_producto = :id_producto");
         $sentenciaSQL->bindParam(':id_producto', $txtID);
         $sentenciaSQL->execute();
         $imagenes = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-    
-        // Si hay imágenes, cargar la primera imagen en `$txtImagen` para previsualización
-        if (!empty($imagenes)) {
-            $txtImagen = $imagenes[0]['nom_archivo']; // Cargar la primera imagen
+        
+        // Para la previsualización, se carga la primera imagen (si existe)
+        if(!empty($imagenes)){
+            $txtImagen = $imagenes[0]['nom_archivo'];
         } else {
-            $txtImagen = ""; // No hay imágenes
+            $txtImagen = "";
         }
-    break;
-
+        break;
+        
     case "borrar":
-        // Obtener las imágenes asociadas al producto
+        // Eliminar imágenes asociadas
         $sentenciaSQL = $conexion->prepare("SELECT nom_archivo FROM imagenes WHERE id_producto = :id_producto");
         $sentenciaSQL->bindParam(':id_producto', $txtID);
         $sentenciaSQL->execute();
         $imagenes = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-    
-        // Eliminar los archivos de imagen del sistema de archivos
-        foreach ($imagenes as $imagen) {
+        foreach($imagenes as $imagen){
             $rutaImagen = "../../img/" . $imagen['nom_archivo'];
-            if (file_exists($rutaImagen)) {
+            if(file_exists($rutaImagen)){
                 unlink($rutaImagen);
             }
         }
-    
-        // Eliminar las imágenes de la tabla `imagenes`
         $sentenciaSQL = $conexion->prepare("DELETE FROM imagenes WHERE id_producto = :id_producto");
         $sentenciaSQL->bindParam(':id_producto', $txtID);
         $sentenciaSQL->execute();
-    
-        // Eliminar el producto de la tabla `productos`
+        
+        // Eliminar el producto
         $sentenciaSQL = $conexion->prepare("DELETE FROM productos WHERE id = :id");
         $sentenciaSQL->bindParam(':id', $txtID);
         $sentenciaSQL->execute();
-    
         header("Location: productos.php");
         break;
-
+        
     case "eliminarImagen":
-        if (!empty($_POST['imagenEliminar'])) {
+        if(!empty($_POST['imagenEliminar'])){
             $imagenEliminar = $_POST['imagenEliminar'];
-
-            // Eliminar el archivo de imagen del sistema de archivos
             $rutaImagen = "../../img/" . $imagenEliminar;
-            if (file_exists($rutaImagen)) {
+            if(file_exists($rutaImagen)){
                 unlink($rutaImagen);
             }
-
-            // Eliminar el registro de la imagen de la tabla `imagenes`
             $sentenciaSQL = $conexion->prepare("DELETE FROM imagenes WHERE nom_archivo = :nom_archivo");
             $sentenciaSQL->bindParam(':nom_archivo', $imagenEliminar);
             $sentenciaSQL->execute();
         }
-
         header("Location: productos.php");
         break;
 }
 
-if ($accion !== "select") {
+if($accion !== "select"){
     $txtID = "";
     $txtMarca = "";
     $txtNombre = "";
@@ -225,6 +211,8 @@ $sentenciaSQL->execute();
 $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+
+
 <link rel="stylesheet" href="css/productos.css">
 
 <body>
@@ -239,12 +227,13 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <input type="text" required class="campo" value="<?php echo $txtID; ?>" name="txtID" placeholder="ID">
                     <input type="text" class="campo" value="<?php echo $txtMarca; ?>" name="txtMarca" placeholder="Marca">
                     <input type="text" required class="campo" value="<?php echo $txtNombre; ?>" name="txtNombre" placeholder="Nombre del Producto">
-                    <input type="text" required class="campo" value="<?php echo $txtPrecio; ?>" name="txtPrecio" placeholder="Precio">
+                    <input type="number" required class="campo" value="<?php echo $txtPrecio; ?>" name="txtPrecio" placeholder="Precio" onkeypress="return soloNumeros(event);">
                     <textarea required class="campo" name="txtDescripcion" placeholder="Descripción" oninput="autoResize(this)"><?php echo $txtDescripcion; ?></textarea>
                     
                     <!-- Botón de selección de imagen -->
                     <label for="txtImagen" class="file-label">Añadir Imagen</label>
-                    <input type="file" name="txtImagen" id="txtImagen" accept=".jpg, .jpeg, .png" class="file-label" style="display: none;">
+                    <input type="file" name="txtImagen[]" id="txtImagen" accept=".jpg, .jpeg, .png" class="file-label" style="display: none;" multiple>
+
 
                     <!-- Previsualización de imagen -->
                     <div class="previsualizacion">
@@ -256,16 +245,24 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             <?php } ?>
                         <?php } else { ?>
-                            <p>No hay imágenes asociadas a este producto.</p>
+                            <?php if (empty($imagenes) && $accion === "select") { ?>
+                                <p>No hay imágenes asociadas a este producto.</p>
+                            <?php } ?>
                         <?php } ?>
                     </div>
 
                     <!-- Botones de acción -->
                     <div class="botones-acciones">
-                        <input type="submit" name="accion" value="agregar" class="btn-enviar">
-                        <input type="submit" name="accion" value="modificar" class="btn-enviar">
-                        <input type="submit" name="accion" value="cancelar" class="btn-enviar">
-                        <input type="hidden" id="imagenesParaEliminar" name="imagenesParaEliminar" value="">
+                        <?php if($accion !== "select"): ?>
+                            <input type="submit" name="accion" value="agregar" class="btn-enviar">
+                        <?php endif; ?>
+                        
+                        <?php if($accion === "select"): ?>
+                            <input type="submit" name="accion" value="modificar" class="btn-enviar">
+                        <?php endif; ?>
+                        
+                        <input type="submit" name="accion" value="cancelar" class="btn-borrar">
+                        <input type="hidden" name="imagenesParaEliminar" id="imagenesParaEliminar" value="">
                     </div>
                 </form>
             </div>
@@ -288,15 +285,17 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                         <?php foreach ($listaProductos as $producto) { ?>
                         <tr>
                             <td>
-                                <?php
-                                // Mostrar todas las imágenes asociadas al producto
-                                $imagenes = explode(',', $producto['imagenes']);
-                                foreach ($imagenes as $imagen) {
-                                    if (!empty($imagen)) {
-                                        echo '<img src="../../img/' . $imagen . '" class="img-table" style="max-width: 100px; margin: 5px;">';
+                                <div class="imagenes-grid">
+                                    <?php
+                                    // Mostrar todas las imágenes asociadas al producto
+                                    $imagenes = explode(',', $producto['imagenes']);
+                                    foreach ($imagenes as $imagen) {
+                                        if (!empty($imagen)) {
+                                            echo '<img src="../../img/' . $imagen . '" class="img-table">';
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
+                                </div>
                             </td>
                             <td><?php echo $producto['id']; ?></td>
                             <td><?php echo $producto['marca']; ?></td>

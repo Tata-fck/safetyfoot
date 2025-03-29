@@ -1,8 +1,8 @@
 <?php
 $host="localhost";
 $bd="u606916403_prueba1";
-$usuario="u606916403_alex1";
-$contrasena="~8ImEcH/ BD";
+$usuario="root";
+$contrasena="";
 
 try{
     $conexion=new PDO("mysql:host=$host;dbname=$bd",$usuario,$contrasena);

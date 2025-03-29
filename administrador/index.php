@@ -36,7 +36,7 @@ if ($_POST) {
 <!-- header.html -->
 <header>
 
-    <?php $url="http://".$_SERVER['HTTP_HOST'] ?>
+    <?php $url="http://".$_SERVER['HTTP_HOST'] . "/SAFETYFOOT"?>
     <!-- Meta información -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

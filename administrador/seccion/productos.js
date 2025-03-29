@@ -1,46 +1,96 @@
-// Redimensionamiento de textarea
-function autoResize(textarea) {
-    textarea.style.height = 'auto'; // Restablece la altura para calcular el nuevo tamaño
-    textarea.style.height = textarea.scrollHeight + 'px'; // Ajusta la altura al contenido
+// Validar que solo se ingresen números en precio
+function soloNumeros(event) {
+    var charCode = event.which || event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
+        return false;
+    }
+    return true;
 }
 
-// Redimensionar automáticamente los textareas con contenido al cargar la página
+// Redimensionar textarea
+function autoResize(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+    // Redimensionar todos los textareas
     document.querySelectorAll("textarea").forEach(function (textarea) {
         autoResize(textarea);
+        textarea.addEventListener('input', () => autoResize(textarea));
     });
 
-    // Agregar evento para previsualizar imágenes al subir un archivo
     const inputImagen = document.getElementById('txtImagen');
     const previewContainer = document.querySelector('.previsualizacion');
+    let archivosSeleccionados = [];
 
     if (inputImagen) {
-        inputImagen.addEventListener('change', function (event) {
-            const file = event.target.files[0]; // Obtener el archivo seleccionado
+        inputImagen.addEventListener('change', function(e) {
+            // Obtener los archivos seleccionados recientemente
+            const nuevosArchivos = Array.from(e.target.files);
+            // Guardar el número previo de archivos para calcular el índice global
+            let prevLength = archivosSeleccionados.length;
+            // Agregar los nuevos archivos al arreglo global
+            archivosSeleccionados = archivosSeleccionados.concat(nuevosArchivos);
 
-            // Limpiar cualquier previsualización anterior
-            previewContainer.innerHTML = '';
+            // Actualizar el input con todos los archivos seleccionados
+            const dataTransfer = new DataTransfer();
+            archivosSeleccionados.forEach(file => dataTransfer.items.add(file));
+            inputImagen.files = dataTransfer.files;
 
-            if (file) {
+            // Generar previsualización para cada archivo nuevo
+            nuevosArchivos.forEach((file, index) => {
+                const globalIndex = prevLength + index; // Índice único para cada archivo
                 const reader = new FileReader();
 
-                // Leer el archivo como una URL de datos
-                reader.onload = function (e) {
+                reader.onload = function(e) {
+                    const imgContainer = document.createElement('div');
+                    imgContainer.className = 'img-container temp-preview';
+                    imgContainer.dataset.index = globalIndex; // Guardamos el índice
+
                     const img = document.createElement('img');
-                    img.src = e.target.result; // Asignar la URL de datos como fuente de la imagen
-                    img.className = 'img-slct'; // Aplicar la clase CSS para el estilo
-                    img.style.maxWidth = '150px'; // Ajustar el tamaño de la imagen
-                    img.style.margin = '5px';
-                    previewContainer.appendChild(img); // Agregar la imagen al contenedor de previsualización
+                    img.src = e.target.result;
+                    img.className = 'img-slct';
+                    img.style.maxWidth = '150px';
+
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'delete-btn';
+                    btn.textContent = 'X';
+                    btn.addEventListener('click', function() {
+                        // Eliminar el archivo correspondiente usando el índice almacenado
+                        const idx = parseInt(imgContainer.dataset.index);
+                        archivosSeleccionados.splice(idx, 1);
+
+                        // Actualizar el input con la nueva lista de archivos
+                        const newDataTransfer = new DataTransfer();
+                        archivosSeleccionados.forEach(file => newDataTransfer.items.add(file));
+                        inputImagen.files = newDataTransfer.files;
+
+                        // Eliminar la previsualización y actualizar índices
+                        imgContainer.remove();
+                        actualizarIndicesPrevisualizaciones();
+                    });
+
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(btn);
+                    previewContainer.appendChild(imgContainer);
                 };
 
-                reader.readAsDataURL(file); // Leer el archivo como una URL de datos
-            }
+                reader.readAsDataURL(file);
+            });
+        });
+    }
+
+    // Función para actualizar los índices de cada previsualización después de eliminar una imagen
+    function actualizarIndicesPrevisualizaciones() {
+        const contenedores = previewContainer.querySelectorAll('.img-container.temp-preview');
+        contenedores.forEach((container, index) => {
+            container.dataset.index = index;
         });
     }
 });
 
-// Almacenar imágenes hasta confirmar eliminación
 let imagenesParaEliminar = [];
 
 function marcarParaEliminar(nombreImagen) {
