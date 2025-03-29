@@ -75,6 +75,34 @@ body {
     overflow: hidden; /* Oculta las barras de desplazamiento */
 }
 
+/*.form-marca {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 15px 0;
+    
+}
+
+.form-marca label {
+	width: 100px;
+	color: #222;
+	font-weight: 500;
+}
+
+.form-marca select {
+	width: 300px;
+	border: none;
+	padding: 12px 15px;
+	background-color: #ffc6c68a;
+	outline: none;
+	color: #666;
+}
+
+.form-marca option{
+    padding: 10px;
+    font-size: 15px;
+}*/
+
 .form-img {
     display: none; /* Oculta el input de archivo original */
     width: 50%;
