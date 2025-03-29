@@ -76,12 +76,11 @@ $imagenes = explode(',', $producto['imagenes']);
 
 				<div class="container-add-cart">
 					<div class="container-quantity">
-						<input
-							type="number"
-							placeholder="1"
-							value="1"
+						<input type="number"
+							placeholder=" Cantidad"
 							min="1"
 							class="input-quantity"
+							onkeypress="return soloNumeros(event);"
 						/>
 						<div class="btn-increment-decrement">
 							<i class="fa-solid fa-chevron-up" id="increment"></i>

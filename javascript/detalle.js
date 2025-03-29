@@ -71,3 +71,12 @@ function adjustSliderWidth() {
 // Inicializar el auto-slide para el segundo slider
 adjustSliderWidth();
 setAutoSlide2();
+
+// Validar que solo se ingresen números en CANTIDAD
+function soloNumeros(event) {
+    var charCode = event.which || event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
