@@ -24,7 +24,7 @@ if (!$producto) {
 
 $imagenes = explode(',', $producto['imagenes']);
 ?>
-
+<body>
     <link rel="stylesheet" href="css/detalle.css" />
 <body>
 		<main>
@@ -48,51 +48,8 @@ $imagenes = explode(',', $producto['imagenes']);
 			<div class="container-info-product">
 				<div class="container-price">
 					<b class = "nombre"><?php echo $producto['marca'] . " " . $producto['nombre']; ?></b><br>
-                    $<?php echo $producto['precio']; ?>
+					$<?php echo $producto['preciomen']; ?> - $<?php echo $producto['preciomay']; ?><br>
 				</div>
-
-				<div class="container-details-product">
-					<div class="form-group">
-						<label for="size">Talla</label>
-						<select name="size" id="size">
-							<option disabled selected value="">
-								Escoge una opción
-							</option>
-							<option value="22">22</option>
-							<option value="23">23</option>
-							<option value="24">24</option>
-							<option value="25">25</option>
-							<option value="26">26</option>
-							<option value="27">27</option>
-							<option value="28">28</option>
-							<option value="29">29</option>
-							<option value="30">30</option>
-							<option value="31">31</option>
-							<option value="32">32</option>
-						</select>
-					</div>
-					<button class="btn-clean">Limpiar</button>
-				</div>
-
-				<div class="container-add-cart">
-					<div class="container-quantity">
-						<input type="number"
-							placeholder=" Cantidad"
-							min="1"
-							class="input-quantity"
-							onkeypress="return soloNumeros(event);"
-						/>
-						<div class="btn-increment-decrement">
-							<i class="fa-solid fa-chevron-up" id="increment"></i>
-							<i class="fa-solid fa-chevron-down" id="decrement"></i>
-						</div>
-					</div>
-					<button class="btn-add-to-cart">
-						<i class="fa-solid fa-plus"></i>
-						Añadir al carrito
-					</button>
-				</div>
-
 				<div class="container-description">
 					<div class="title-description">
 						<h4>Descripción</h4>
@@ -105,13 +62,46 @@ $imagenes = explode(',', $producto['imagenes']);
 					</div>
 				</div>
 
-				<div class="container-additional-information">
-					<div class="title-additional-information">
-						<h4>Información adicional</h4>
+				<div class="container-details-product">
+					<div class="title-description">
+						<h4>Seleccionar Tallas</h4>
 						<i class="fa-solid fa-chevron-down"></i>
 					</div>
-					<div class="text-additional-information hidden">
-						<p>-----------</p>
+					<table class="table-tallas">
+						<tr class="header">
+							<th>Talla</th>
+							<th>Cantidad</th>
+							<th>Talla</th>
+							<th>Cantidad</th>
+						</tr>
+						<?php for ($talla = 22; $talla <= 32; $talla++) : ?>
+						<tr>
+							<td><strong><?php echo $talla; $talla++;?></strong></td>
+							<td>
+								<input type="number"
+									placeholder=" Cantidad"
+									min="1"
+									class="input-quantity"
+									onkeypress="return soloNumeros(event);"
+								/>
+							</td>
+							<td><strong><?php echo $talla; ?></strong></td>
+							<td>
+								<input type="number"
+									placeholder=" Cantidad"
+									min="1"
+									class="input-quantity"
+									onkeypress="return soloNumeros(event);"
+								/>
+							</td>
+						</tr>
+						<?php endfor; ?>
+					</table>
+					<div class="container-add-cart">
+						<button class="btn-add-to-cart">
+							<i class="fa-solid fa-plus"></i>
+							<img src="images/carrito.svg" class="img-carrito"> Añadir al carrito
+						</button>
 					</div>
 				</div>
 
@@ -126,12 +116,30 @@ $imagenes = explode(',', $producto['imagenes']);
 				</div>
 			</div>
 		</main>
+	<div class="container-detalles-product">
+		<div class="t-galeria">
+			<h1 class="t-ofertas">Informacion de Costos</h1>
+			<i class="fa-solid fa-chevron-down"></i>
+		</div>
+		<table class="table-precios">
+			<tr class="header">
+				<th>No. DE PIEZAS</th>
+				<th>1 - 5 Unidades</th>
+				<th>6+ Unidades</th>
+			</tr>
+			<tr>
+				<td class="t-precio">PRECIO $</td>
+				<td><?php echo $producto['preciomen'];?></td>
+				<td><?php echo $producto['preciomay'];?></td>
+			</tr>
+		</table>
+	</div>
 
 		
 
 <?php
 	$sentenciaSQL = $conexion->prepare(
-		"SELECT p.id, p.nombre, p.precio, 
+		"SELECT p.id, p.nombre, p.preciomen, p.preciomay, 
 			(SELECT i.nom_archivo FROM imagenes i 
 				WHERE i.id_producto = p.id 
 				ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
@@ -145,31 +153,33 @@ $imagenes = explode(',', $producto['imagenes']);
     <div class="t-galeria">
         <h1 class="t-ofertas"> Productos Relacionados </h1>
     </div>
-    <div class="galeria">
-        <div class="galery-btn-l"><img src="images/inicio/galery-flecha-l.svg"></div>
-        <div class="container-galeria">
-            <div class="items" id="galery">
-            <?php foreach ($listaProductos as $producto) { ?>
-                <div class="item">
-                    <figure>
-                        <img
-                            src="./img/<?php echo $producto['imagen']; ?>"
-                            alt="producto"
-                        />
-                    </figure>
-                    <div class="info-product">
-                        <h2><?php echo $producto['nombre']; ?></h2>
-                        <p class="price">$<?php echo $producto['precio']; ?></p>
-                        <button onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Ver detalles</button>
-                    </div>
-                </div>
-            <?php } ?> 
-            </div>
-        </div>
-        <div class="galery-btn-r"><img src="images/inicio/galery-flecha-r.svg"></div>
-    </div>
+	<div class="box-galeria">
+		<div class="galeria">
+			<div class="galery-btn-l"><img src="images/inicio/galery-flecha-l.svg"></div>
+			<div class="container-galeria">
+				<div class="items" id="galery">
+				<?php foreach ($listaProductos as $producto) { ?>
+					<div class="item">
+						<figure>
+							<img
+								src="./img/<?php echo $producto['imagen']; ?>"
+								alt="producto"
+							/>
+						</figure>
+						<div class="info-product">
+							<h2><?php echo $producto['nombre']; ?></h2>
+							<p class="price">$<?php echo $producto['preciomen']; ?> - $<?php echo $producto['preciomay'];?></p>
+							<button onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Ver detalles</button>
+						</div>
+					</div>
+				<?php } ?> 
+				</div>
+			</div>
+			<div class="galery-btn-r"><img src="images/inicio/galery-flecha-r.svg"></div>
+		</div>
+	</div>
 	
 	<script src="javascript/detalle.js"></script> 
-	</body>
+</body>
 
     <?php include("elements/footer/footer.html"); ?>
