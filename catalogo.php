@@ -2,7 +2,7 @@
 
 include("administrador/cofig/bd.php");
 $sentenciaSQL = $conexion->prepare(
-    "SELECT p.id, p.marca, p.nombre, p.precio, 
+    "SELECT p.id, p.marca, p.nombre, p.preciomen, 
            (SELECT i.nom_archivo FROM imagenes i 
             WHERE i.id_producto = p.id 
             ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
@@ -30,7 +30,7 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
             <div class="info-product">
                 <h2><?php echo $producto['marca']; ?></h2>
                 <h2><?php echo $producto['nombre']; ?></h2>
-                <p class="price">$<?php echo $producto['precio']; ?></p>
+                <p class="price">$<?php echo $producto['preciomen']; ?></p>
                 <button class="ver-p" onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Ver detalles</button>
             </div>
         </div>  
