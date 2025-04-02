@@ -62,7 +62,7 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <div class="info-product">
                         <h2><?php echo $producto['nombre']; ?></h2>
                         <p class="price">$<?php echo $producto['preciomen']; ?> - $<?php echo $producto['preciomay']; ?></p>
-                        <button onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Añadir al carrito</button>
+                        <button onclick="window.location.href='detalle.php?id=<?php echo $producto['id']; ?>'">Ver Detalles</button>
                     </div>
                 </div>
             <?php } ?> 
