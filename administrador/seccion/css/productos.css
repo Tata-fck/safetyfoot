@@ -66,6 +66,17 @@ body {
     margin-bottom: 20px;
     border-radius: 3px;
 }
+
+.campo-precio{
+    width: 49%;
+    margin-right: 2px;
+    padding: 15px 10px;
+    font-size: 1rem;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+
 .columna-formulario form textarea{
     font-family: inherit;
     width: 100%;
@@ -274,6 +285,10 @@ footer{
 
     .cont-form p{
         font-size: 1.2rem;
+    }
+
+    .campo-precio{
+        margin-right: 0px;
     }
 
     .img-table{

@@ -4,7 +4,8 @@
 $txtID = isset($_POST['txtID']) ? $_POST['txtID'] : "";
 $txtMarca = isset($_POST['txtMarca']) ? $_POST['txtMarca'] : "";
 $txtNombre = isset($_POST['txtNombre']) ? $_POST['txtNombre'] : "";
-$txtPrecio = isset($_POST['txtPrecio']) ? $_POST['txtPrecio'] : "";
+$txtPrecioMen = isset($_POST['txtPrecioMen']) ? $_POST['txtPrecioMen'] : "";
+$txtPrecioMay = isset($_POST['txtPrecioMay']) ? $_POST['txtPrecioMay'] : "";
 $txtDescripcion = isset($_POST['txtDescripcion']) ? $_POST['txtDescripcion'] : "";
 // Se recibe el arreglo de imágenes (no modifiques la parte de previsualización)
 $txtImagen = isset($_FILES['txtImagen']) ? $_FILES['txtImagen'] : null;
@@ -19,12 +20,13 @@ switch($accion){
             $txtID = uniqid();
         }
         // Insertar el producto en la tabla `productos`
-        $sentenciaSQL = $conexion->prepare("INSERT INTO productos (id, marca, nombre, precio, descripcion) 
-            VALUES (:id, :marca, :nombre, :precio, :descripcion)");
+        $sentenciaSQL = $conexion->prepare("INSERT INTO productos (id, marca, nombre, preciomen, preciomay, descripcion) 
+            VALUES (:id, :marca, :nombre, :preciomen, :preciomay, :descripcion)");
         $sentenciaSQL->bindParam(':id', $txtID);
         $sentenciaSQL->bindParam(':nombre', $txtNombre);
         $sentenciaSQL->bindParam(':marca', $txtMarca);
-        $sentenciaSQL->bindParam(':precio', $txtPrecio);
+        $sentenciaSQL->bindParam(':preciomen', $txtPrecioMen);
+        $sentenciaSQL->bindParam(':preciomay', $txtPrecioMay);
         $sentenciaSQL->bindParam(':descripcion', $txtDescripcion);
         $sentenciaSQL->execute();
 
@@ -77,11 +79,12 @@ switch($accion){
         }
         
         // Actualizar datos del producto
-        $sentenciaSQL = $conexion->prepare("UPDATE productos SET marca = :marca, nombre = :nombre, precio = :precio, descripcion = :descripcion WHERE id = :id");
+        $sentenciaSQL = $conexion->prepare("UPDATE productos SET marca = :marca, nombre = :nombre, preciomen = :preciomen, preciomay = :preciomay, descripcion = :descripcion WHERE id = :id");
         $sentenciaSQL->bindParam(':id', $txtID);
         $sentenciaSQL->bindParam(':nombre', $txtNombre);
         $sentenciaSQL->bindParam(':marca', $txtMarca);
-        $sentenciaSQL->bindParam(':precio', $txtPrecio);
+        $sentenciaSQL->bindParam(':preciomen', $txtPrecioMen);
+        $sentenciaSQL->bindParam(':preciomay', $txtPrecioMay);
         $sentenciaSQL->bindParam(':descripcion', $txtDescripcion);
         $sentenciaSQL->execute();
         
@@ -121,7 +124,8 @@ switch($accion){
         $txtID = "";
         $txtMarca = "";
         $txtNombre = "";
-        $txtPrecio = "";
+        $txtPrecioMen = "";
+        $txtPrecioMay = "";
         $txtDescripcion = "";
         $txtImagen = "";
         $imagenes = [];
@@ -137,7 +141,8 @@ switch($accion){
         $txtID = $producto['id'];
         $txtMarca = $producto['marca'];
         $txtNombre = $producto['nombre'];
-        $txtPrecio = $producto['precio'];
+        $txtPrecioMen = $producto['preciomen'];
+        $txtPrecioMay = $producto['preciomay'];
         $txtDescripcion = $producto['descripcion'];
         
         // Obtener imágenes asociadas al producto
@@ -197,11 +202,12 @@ if($accion !== "select"){
     $txtMarca = "";
     $txtNombre = "";
     $txtImagen = "";
-    $txtPrecio = "";
+    $txtPrecioMen = "";
+    $txtPrecioMay = "";
     $txtDescripcion = "";
 }
 
-$sentenciaSQL = $conexion->prepare("SELECT p.id, p.marca, p.nombre, p.precio, p.descripcion,
+$sentenciaSQL = $conexion->prepare("SELECT p.id, p.marca, p.nombre, p.preciomen, p.preciomay, p.descripcion,
     GROUP_CONCAT(i.nom_archivo) AS imagenes
     FROM productos p
     LEFT JOIN imagenes i ON p.id = i.id_producto
@@ -227,7 +233,8 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                     <input type="text" required class="campo" value="<?php echo $txtID; ?>" name="txtID" placeholder="ID">
                     <input type="text" class="campo" value="<?php echo $txtMarca; ?>" name="txtMarca" placeholder="Marca">
                     <input type="text" required class="campo" value="<?php echo $txtNombre; ?>" name="txtNombre" placeholder="Nombre del Producto">
-                    <input type="number" required class="campo" value="<?php echo $txtPrecio; ?>" name="txtPrecio" placeholder="Precio" onkeypress="return soloNumeros(event);">
+                    <input type="number" required class="campo-precio" value="<?php echo $txtPrecioMen; ?>" name="txtPrecioMen" placeholder="Precio Menudeo" onkeypress="return soloNumeros(event);">
+                    <input type="number" required class="campo-precio" value="<?php echo $txtPrecioMay; ?>" name="txtPrecioMay" placeholder="Precio Mayoreo" onkeypress="return soloNumeros(event);">
                     <textarea required class="campo" name="txtDescripcion" placeholder="Descripción" oninput="autoResize(this)"><?php echo $txtDescripcion; ?></textarea>
                     
                     <!-- Botón de selección de imagen -->
@@ -276,7 +283,8 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                             <th>ID</th>
                             <th>Marca</th>
                             <th>Nombre</th>
-                            <th>Precio</th>
+                            <th>Precio Men</th>
+                            <th>Precio May</th>
                             <th>Descripción</th>
                             <th>Acciones</th>
                         </tr>
@@ -300,7 +308,8 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                             <td><?php echo $producto['id']; ?></td>
                             <td><?php echo $producto['marca']; ?></td>
                             <td><?php echo $producto['nombre']; ?></td>
-                            <td><?php echo $producto['precio']; ?></td>
+                            <td><?php echo $producto['preciomen']; ?></td>
+                            <td><?php echo $producto['preciomay']; ?></td>
                             <td><?php echo $producto['descripcion']; ?></td>
                             <td>
                                 <form method="post">
