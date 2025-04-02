@@ -26,7 +26,7 @@ $imagenes = explode(',', $producto['imagenes']);
 ?>
 <body>
     <link rel="stylesheet" href="css/detalle.css" />
-<body>
+	<div class="container-main">
 		<main>
 			<div class="container-img">
 				<div class="carrusel2">
@@ -116,7 +116,8 @@ $imagenes = explode(',', $producto['imagenes']);
 				</div>
 			</div>
 		</main>
-	<div class="container-detalles-product">
+	</div>
+	<!--<div class="container-detalles-product">-->
 		<div class="t-galeria">
 			<h1 class="t-ofertas">Informacion de Costos</h1>
 			<i class="fa-solid fa-chevron-down"></i>
@@ -133,7 +134,7 @@ $imagenes = explode(',', $producto['imagenes']);
 				<td><?php echo $producto['preciomay'];?></td>
 			</tr>
 		</table>
-	</div>
+	<!--</div>-->
 
 		
 
