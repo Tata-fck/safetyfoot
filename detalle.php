@@ -75,30 +75,39 @@ $imagenes = explode(',', $producto['imagenes']);
 							<th>Cantidad</th>
 						</tr>
 						<?php for ($talla = 22; $talla <= 32; $talla++) : ?>
-						<tr>
-							<td><strong><?php echo $talla; $talla++;?></strong></td>
-							<td>
-								<input type="number"
-									placeholder=" Cantidad"
-									min="1"
-									class="input-quantity"
-									onkeypress="return soloNumeros(event);"
-								/>
-							</td>
-							<td><strong><?php echo $talla; ?></strong></td>
-							<td>
-								<input type="number"
-									placeholder=" Cantidad"
-									min="1"
-									class="input-quantity"
-									onkeypress="return soloNumeros(event);"
-								/>
-							</td>
-						</tr>
+							<tr>
+								<?php
+								$t1 = $talla;
+								$talla++;
+								$t2 = $talla;
+								?>
+								<td><strong><?php echo $t1; ?></strong></td>
+								<td>
+									<input type="number"
+										name="tallas[<?php echo $t1; ?>]"
+										data-talla="<?php echo $t1; ?>"
+										placeholder="Cantidad"
+										min="0"
+										class="input-quantity"
+										onkeypress="return soloNumeros(event);"
+									/>
+								</td>
+								<td><strong><?php echo $t2; ?></strong></td>
+								<td>
+									<input type="number"
+										name="tallas[<?php echo $t2; ?>]"
+										data-talla="<?php echo $t2; ?>"
+										placeholder="Cantidad"
+										min="0"
+										class="input-quantity"
+										onkeypress="return soloNumeros(event);"
+									/>
+								</td>
+							</tr>
 						<?php endfor; ?>
 					</table>
 					<div class="container-add-cart">
-						<button class="btn-add-to-cart">
+						<button class="btn-add-to-cart" onclick="añadirAlCarrito(event)">
 							<i class="fa-solid fa-plus"></i>
 							<img src="images/carrito.svg" class="img-carrito"> Añadir al carrito
 						</button>

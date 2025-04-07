@@ -80,3 +80,40 @@ function soloNumeros(event) {
     }
     return true;
 }
+
+function añadirAlCarrito(event) {
+    event.preventDefault();
+    const inputs = document.querySelectorAll('.input-quantity');
+    let tallas = {};
+
+    inputs.forEach(input => {
+        const talla = input.getAttribute('data-talla');
+        const cantidad = parseInt(input.value);
+        if (cantidad && cantidad > 0) {
+            tallas[talla] = cantidad;
+        }
+    });
+
+    if (Object.keys(tallas).length === 0) {
+        alert("Agrega al menos una talla con cantidad.");
+        return;
+    }
+
+    // Obtener carrito existente o crear uno nuevo
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || {};
+
+    // Mezclar nuevas tallas al carrito (sumar si ya existe)
+    for (let talla in tallas) {
+        if (carrito[talla]) {
+            carrito[talla] += tallas[talla];
+        } else {
+            carrito[talla] = tallas[talla];
+        }
+    }
+
+    // Guardar en localStorage
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+    alert("Producto añadido al carrito.");
+    console.log("Carrito actual:", carrito);
+}
