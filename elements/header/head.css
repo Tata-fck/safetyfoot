@@ -97,6 +97,18 @@ nav a:hover::before {
     width: 100%;
 }
 
+.img-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+}
+
+.img-carrito {
+    width: 25px;
+    margin-left: 20px;
+}
+
 /* Checkbox: menú oculto */
 .menu-toggle:checked ~ .menu-items {
     display: flex;
