@@ -231,7 +231,21 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
             <div class="columna-formulario">
                 <form method="POST" enctype="multipart/form-data">
                     <input type="text" required class="campo" value="<?php echo $txtID; ?>" name="txtID" placeholder="ID">
-                    <input type="text" class="campo" value="<?php echo $txtMarca; ?>" name="txtMarca" placeholder="Marca">
+                    <!--<input type="text" class="campo" value="<?php echo $txtMarca; ?>" name="txtMarca" placeholder="Marca">-->
+                    <div class="marca-container">
+						<label for="txtMarca">Marca</label>
+						<select name="txtMarca" id="txtMarca">
+							<option disabled selected value="">
+                                <?php if($txtMarca != ""){
+                                    echo $txtMarca;
+                                }else{
+                                    echo "Selecciona una marca";
+                                }?>
+							</option>
+							<option value="VanVien">VanVien</option>
+							<option value="Otro">Otro</option>
+						</select>
+					</div>
                     <input type="text" required class="campo" value="<?php echo $txtNombre; ?>" name="txtNombre" placeholder="Nombre del Producto">
                     <input type="number" required class="campo-precio" value="<?php echo $txtPrecioMen; ?>" name="txtPrecioMen" placeholder="Precio Menudeo" onkeypress="return soloNumeros(event);">
                     <input type="number" required class="campo-precio" value="<?php echo $txtPrecioMay; ?>" name="txtPrecioMay" placeholder="Precio Mayoreo" onkeypress="return soloNumeros(event);">

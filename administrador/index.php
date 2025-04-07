@@ -77,7 +77,7 @@ if ($_POST) {
             </div>
             <?php } ?>
             <form method="POST" autocomplete="off">
-                <input type="usuario" name="usuario" placeholder="Usuario" class="campo">
+                <input type="username" name="usuario" placeholder="Usuario" class="campo">
                 <div class="contra-input">
                     <input type="password" name="contrasenia" placeholder="Contraseña" class="campo" id="campo-contra"/>
                     <div class="boton-ojo">
