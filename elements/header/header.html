@@ -38,8 +38,25 @@
                 <a href="catalogo.php">Catalogo</a>
                 <a href="nosotros.php">Nosotros</a>
                 <a href="contacto.php">Contactanos</a>
-                <a href="carrito.php"><div class="img-container"><img src="images/carrito.svg" class="img-carrito"></div></a>
+                <a href="carrito.php">
+                    <div class="img-container">
+                        <img src="images/carrito.svg" class="img-carrito">
+                        <span id="cart-indicator" class="cart-indicator hidden"></span>
+                    </div>
+                </a>
             </div>
         </nav>
     </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || {};
+    const cartIndicator = document.getElementById('cart-indicator');
+
+    if (Object.keys(carrito).length > 0) {
+        cartIndicator.classList.add('visible');
+    } else {
+        cartIndicator.classList.remove('visible');
+    }
+});
+</script>
 </header>

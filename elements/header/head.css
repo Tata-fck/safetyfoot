@@ -113,6 +113,25 @@ nav a:hover::before {
     transition: filter 0s ease-in-out;
 }
 
+.cart-indicator {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    display: none; /* Oculto por defecto */
+}
+
+.cart-indicator.visible {
+    display: block; /* Mostrar cuando sea necesario */
+}
+
+.img-container {
+    position: relative; /* Necesario para posicionar el indicador */
+}
+
 /* Checkbox: menú oculto */
 .menu-toggle:checked ~ .menu-items {
     display: flex;

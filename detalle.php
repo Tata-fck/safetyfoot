@@ -107,10 +107,10 @@ $imagenes = explode(',', $producto['imagenes']);
 						<?php endfor; ?>
 					</table>
 					<div class="container-add-cart">
-						<button class="btn-add-to-cart" onclick="añadirAlCarrito(event)">
-							<i class="fa-solid fa-plus"></i>
-							<img src="images/carrito.svg" class="img-carrito"> Añadir al carrito
-						</button>
+					<button class="btn-add-to-cart" data-product-id="<?php echo $producto['id']; ?>" onclick="añadirAlCarrito(event)">
+						<i class="fa-solid fa-plus"></i>
+						<img src="images/carrito.svg" class="img-carrito"> Añadir al carrito
+					</button>
 					</div>
 				</div>
 

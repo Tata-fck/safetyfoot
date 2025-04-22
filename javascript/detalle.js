@@ -103,11 +103,16 @@ function añadirAlCarrito(event) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || {};
 
     // Mezclar nuevas tallas al carrito (sumar si ya existe)
+    const productoId = document.querySelector('.btn-add-to-cart').getAttribute('data-product-id');
+    if (!carrito[productoId]) {
+        carrito[productoId] = {};
+    }
+
     for (let talla in tallas) {
-        if (carrito[talla]) {
-            carrito[talla] += tallas[talla];
+        if (carrito[productoId][talla]) {
+            carrito[productoId][talla] += tallas[talla];
         } else {
-            carrito[talla] = tallas[talla];
+            carrito[productoId][talla] = tallas[talla];
         }
     }
 
