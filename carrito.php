@@ -2,16 +2,26 @@
 include("elements/header/header.html");
 include("administrador/cofig/bd.php");
 ?>
+
 <body>
     <link rel="stylesheet" href="css/carrito.css" />
 
     <h2>Resumen del Carrito</h2>
-    <div id="contenedor-tablas"></div>
+    <div class="contenedor-principal">
+        <div id="contenedor-tablas"></div>
+        <div id="resumen-precios">
+            <h3>Resumen de Precios</h3>
+            <ul id="lista-precios"></ul>
+            <p><strong>Total:</strong> $<span id="total-precio">0.00</span></p>
+        </div>
+    </div>
 </body>
 
 <script>
     const carrito = JSON.parse(localStorage.getItem('carrito')) || {};
     const contenedorTablas = document.getElementById('contenedor-tablas');
+    const listaPrecios = document.getElementById('lista-precios');
+    const totalPrecio = document.getElementById('total-precio');
 
     if (Object.keys(carrito).length === 0) {
         contenedorTablas.innerHTML = '<p>El carrito está vacío.</p>';
@@ -30,8 +40,11 @@ include("administrador/cofig/bd.php");
                 return;
             }
 
+            let total = 0;
+
             // Generar tablas para cada producto
             data.forEach(producto => {
+                let subtotal = 0;
                 let tabla = `
                     <table class="tabla-producto">
                         <tr>
@@ -48,17 +61,26 @@ include("administrador/cofig/bd.php");
 
                 // Agregar filas para las tallas
                 for (let talla in producto.tallas) {
+                    const cantidad = producto.tallas[talla];
+                    const precio = producto.preciomen; // Usar precio menor
+                    subtotal += cantidad * precio;
                     tabla += `
                         <tr>
                             <td>${talla}</td>
-                            <td>${producto.tallas[talla]}</td>
+                            <td>${cantidad}</td>
                         </tr>
                     `;
                 }
 
                 tabla += `</table>`;
                 contenedorTablas.innerHTML += tabla;
+
+                // Agregar al resumen de precios
+                listaPrecios.innerHTML += `<li>${producto.nombre}: $${subtotal.toFixed(2)}</li>`;
+                total += subtotal;
             });
+
+            totalPrecio.textContent = total.toFixed(2);
         })
         .catch(error => {
             console.error('Error al obtener los productos del carrito:', error);

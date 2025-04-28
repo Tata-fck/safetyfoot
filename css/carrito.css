@@ -11,7 +11,61 @@ body {
     align-items: center;
 }
 
+
+
+.contenedor-principal {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+#contenedor-tablas {
+    width: 70%;
+    padding-right: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid black; /* Define el estilo del borde: grosor, tipo y color */
+    padding: 8px; /* Espacio interno de las celdas para que el contenido no esté pegado al borde */
+    text-align: left; /* Alineación del texto dentro de las celdas */
+}
+
 img {
-    max-width: 300px;
+    max-width: 10vw;
     height: auto;
+}
+ 
+#resumen-precios {
+    width: 30%;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#resumen-precios h3 {
+    margin-top: 0;
+}
+
+#resumen-precios ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+#resumen-precios ul li {
+    margin-bottom: 10px;
+}
+
+#resumen-precios p {
+    font-size: 1.2em;
+    font-weight: bold;
 }

@@ -101,7 +101,6 @@ nav a:hover::before {
     width: 100%;
     display: flex;
     justify-content: center; /* Centra horizontalmente */
-    align-items: center;
 }
 
 .img-carrito {
@@ -203,6 +202,17 @@ nav a:hover::before {
     .logo-expanded {
         width: 100px; /* Ajusta este valor según sea necesario */
         transition: width 0.3s ease; /* Agrega una transición suave */
+    }
+
+    .cart-indicator {
+        position: absolute; /* Cambia a posición absoluta */
+        top: 0;
+        right: 12vh;
+        width: 10px;
+        height: 10px;
+        background-color: #ffcc00;
+        border-radius: 50%;
+        display: none; /* Oculto por defecto */
     }
 }
 
