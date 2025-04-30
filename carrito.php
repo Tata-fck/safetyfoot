@@ -46,13 +46,15 @@ include("administrador/cofig/bd.php");
             data.forEach(producto => {
                 let subtotal = 0;
                 let tabla = `
+                    <table class="tabla-nombre">
+                        <tr>
+                            <th colspan="3">${producto.marca} ${producto.nombre}</th>
+                        </tr>
+                    </table>
                     <table class="tabla-producto">
                         <tr>
-                            <th colspan="3">${producto.nombre}</th>
-                        </tr>
-                        <tr>
                             <td rowspan="${Object.keys(producto.tallas).length + 1}">
-                                <img src="./img/${producto.imagen}" alt="${producto.nombre}" class="imagen-producto">
+                                <img src="./img/${producto.imagen}" alt="${producto.nombre}" class="imagen-producto">   
                             </td>
                             <th>Talla</th>
                             <th>Cantidad</th>
@@ -67,7 +69,11 @@ include("administrador/cofig/bd.php");
                     tabla += `
                         <tr>
                             <td>${talla}</td>
-                            <td>${cantidad}</td>
+                            <td>
+                                <button class="btn-decrementar" data-id="${producto.id}" data-talla="${talla}">-</button>
+                                <input type="number" class="input-cantidad" data-id="${producto.id}" data-talla="${talla}" value="${cantidad}" min="0">
+                                <button class="btn-incrementar" data-id="${producto.id}" data-talla="${talla}">+</button>
+                            </td>
                         </tr>
                     `;
                 }
@@ -86,6 +92,40 @@ include("administrador/cofig/bd.php");
             console.error('Error al obtener los productos del carrito:', error);
             contenedorTablas.innerHTML = '<p>Ocurrió un error al cargar el carrito.</p>';
         });
+    }
+
+    // Manejar eventos de incremento, decremento y edición manual
+    document.addEventListener('click', (event) => {
+        if (event.target.classList.contains('btn-incrementar')) {
+            const id = event.target.dataset.id;
+            const talla = event.target.dataset.talla;
+            carrito[id][talla]++;
+            actualizarCarrito();
+        } else if (event.target.classList.contains('btn-decrementar')) {
+            const id = event.target.dataset.id;
+            const talla = event.target.dataset.talla;
+            if (carrito[id][talla] > 0) {
+                carrito[id][talla]--;
+                actualizarCarrito();
+            }
+        }
+    });
+
+    document.addEventListener('input', (event) => {
+        if (event.target.classList.contains('input-cantidad')) {
+            const id = event.target.dataset.id;
+            const talla = event.target.dataset.talla;
+            const nuevaCantidad = parseInt(event.target.value, 10);
+            if (!isNaN(nuevaCantidad) && nuevaCantidad >= 0) {
+                carrito[id][talla] = nuevaCantidad;
+                actualizarCarrito();
+            }
+        }
+    });
+
+    function actualizarCarrito() {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        location.reload(); // Recargar para reflejar los cambios
     }
 </script>
 

@@ -22,7 +22,7 @@ try {
 
         // Obtener información del producto
         $sentenciaSQL = $conexion->prepare("
-            SELECT p.id, p.nombre, 
+            SELECT p.id, p.nombre, p.marca, 
                    (SELECT i.nom_archivo FROM imagenes i 
                     WHERE i.id_producto = p.id 
                     ORDER BY i.num_archivo ASC LIMIT 1) AS imagen
@@ -38,6 +38,7 @@ try {
             $productos[] = [
                 'id' => $producto['id'],
                 'nombre' => $producto['nombre'],
+                'marca' => $producto['marca'],
                 'imagen' => $producto['imagen'],
                 'tallas' => $tallas
             ];
