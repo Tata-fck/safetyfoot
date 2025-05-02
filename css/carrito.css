@@ -1,8 +1,12 @@
 html, body {
     height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 body {
+    flex: 1;
     background: var(--fondo);
     font-family: 'Open Sans', sans-serif;
     margin: 0;
@@ -11,35 +15,181 @@ body {
     align-items: center;
 }
 
-
+body > .contenedor-principal {
+    flex: 1;
+}
 
 .contenedor-principal {
     display: flex;
-    width: 90%;
-    max-width: 1200px;
+    width: 70%;
     margin: 20px auto;
 }
 
 #contenedor-tablas {
     width: 70%;
     padding-right: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+    table-layout: fixed; /* Fija el ancho de las columnas */
 }
 
 th, td {
-    border: 1px solid black; /* Define el estilo del borde: grosor, tipo y color */
-    padding: 8px; /* Espacio interno de las celdas para que el contenido no esté pegado al borde */
-    text-align: left; /* Alineación del texto dentro de las celdas */
+    border: 0;
+    padding: 8px; 
+    text-align: center; 
 }
 
-img {
-    max-width: 10vw;
+th{
+    border-bottom: 2px solid rgba(104, 104, 104, 0.486);
+}
+
+.titulo-carrito{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    white-space:
+    nowrap;
+}
+
+.img-carrito-vacio{
+    width: 70%;
     height: auto;
+    display: block;
+    margin: 0 auto; /* Centra la imagen dentro de la celda */
+}
+
+.tabla-nombre{
+    background-color: #943838;
+    color: white;
+    border-top: 1px solid #e3e9ef;
+    border-bottom: 2px solid #e3e9ef;
+    font-size: 2vh;
+}
+
+.tabla-nombre th {
+    text-align: left;
+    padding: 10px;
+}
+
+.tabla-nombre th:last-child {
+    text-align: right;
+}
+
+.btn-eliminar-articulo {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-eliminar-articulo:hover {
+    background-color: #c9302c;
+}
+
+.tabla-producto{
+    margin-bottom: 50px;
+}
+
+.tabla-producto td[rowspan] {
+    width: 15%; 
+    border-top: 0;
+}
+
+.tabla-producto td:nth-child(2),
+.tabla-producto th:nth-child(2){
+    width: 20%;
+}
+
+.tabla-producto img {
+    width: 90%; /* La imagen ocupa todo el ancho de su celda */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Centra la imagen dentro de la celda */
+    border-radius: 25%;
+}
+
+.tabla-producto td:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 120%;
+}
+
+.celda-talla{
+    font-size: 1.1em;
+}
+
+.input-cantidad {
+    width: 6vw;
+    text-align: center;
+    font-size: 1.1em;
+    height: 30px;
+    border: 0;
+    -webkit-appearance: textfield !important;
+    margin: 10px 0 10px 0;
+    -moz-appearance:textfield !important;
+}
+
+.btn-incrementar, .btn-decrementar {
+    background-color: #ffcc00;
+    color: rgb(100, 100, 100);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 1000;
+    font-size: 1.2em;
+    border-radius: 20%;
+    height:30px;
+}
+
+.btn-decrementar{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-incrementar{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.contenedor-cantidad{
+    width: 100%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.btn-incrementar:hover, .btn-decrementar:hover {
+    background-color: rgb(156, 141, 55)
+}
+
+.btn-eliminar-talla {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: auto;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    border-radius: 10%;
+    font-weight: bold;
+    max-height: 30px;
+}
+
+.btn-eliminar-talla:hover {
+    background-color: #c9302c;
 }
  
 #resumen-precios {
@@ -53,6 +203,7 @@ img {
 
 #resumen-precios h3 {
     margin-top: 0;
+    margin-bottom: 15px;
 }
 
 #resumen-precios ul {
@@ -62,10 +213,138 @@ img {
 }
 
 #resumen-precios ul li {
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resumen-imagen {
+    width: 100px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+.resumen-detalles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.resumen-nombre {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.resumen-cantidad,
+.resumen-precio,
+.resumen-subtotal {
+    font-size: 0.9em;
+    margin: 2px 0;
+}
+
+.resumen-oferta{
+    color: #ca2621;
+    text-decoration: line-through; /* Aplica la línea de tachado estándar */
+}
+
+.resumen-precio {
+    font-weight: bold;
+    color: green; /* Color rojo para el precio */
 }
 
 #resumen-precios p {
     font-size: 1.2em;
-    font-weight: bold;
+    text-align: center;
+}
+.btn-continuar {
+    margin-top: 15px;
+    border: none;
+    background-color: #4CAF50;
+    width: 100%;
+    padding: 15px 0 15px 0;
+    color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+.btn-continuar:hover {
+    color: #757065;
+}
+.img-paloma {
+    width: 25px;
+    margin-right: 20px;
+    filter: invert(100%);
+    cursor: pointer;
+    transition: filter 0s ease-in-out;
+}
+.btn-continuar:hover .img-paloma {
+    filter: invert(50%);
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 830px) {
+    .contenedor-principal {
+        flex-direction: column; /* Cambiar a una sola columna */
+        width: 90%; /* Ocupa el 90% del ancho de la pantalla */
+    }
+
+    .img-carrito-vacio{
+        width: 100%;
+    }
+
+    .tabla-producto td[rowspan] {
+        width: 25%; 
+    }
+
+
+    .tabla-producto img {
+        width: 100%; /* La imagen ocupa todo el ancho de su celda */
+
+    }
+
+    .input-cantidad,.btn-incrementar, .btn-decrementar {
+        height: 2em; /* Ajustar el tamaño de los botones y el input */
+        font-size: 1.2em; /* Reducir el tamaño de la fuente */
+        width: 1.9em;
+    }
+
+    #contenedor-tablas,
+    #resumen-precios {
+        width: 100%; /* Cada sección ocupa el 100% del contenedor */
+        margin-bottom: 20px; /* Espaciado entre las secciones */
+        padding-right: 0;
+    }
+
+    #resumen-precios {
+        padding: 15px; /* Reducir el padding para dispositivos pequeños */
+    }
+
+    .tabla-producto img {
+        width: 100%; /* Asegurar que las imágenes se ajusten al ancho */
+        height: auto;
+    }
+
+    .resumen-imagen {
+        width: 80px; /* Ajustar el tamaño de la imagen en el resumen */
+        height: 50px;
+    }
+
+    .resumen-detalles {
+        font-size: 0.9em; /* Reducir ligeramente el tamaño del texto */
+    }
 }

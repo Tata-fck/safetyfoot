@@ -13,9 +13,10 @@
                 <a href="https://maps.app.goo.gl/i3JnuHWJKzqqUZfX6?g_st=com.google.maps.preview.copy"><i class="fa fa-map-marked"></i> C. Juan E. Hernández y Davalos 85b, Algarín, Cuauhtémoc, 06880 Ciudad de México, CDMX</a>
             </div>
             <form id="contactForm" autocomplete="off">
+                <input type="hidden" name="origen" value="contacto">
                 <input type="text" name="nombre" placeholder="Tu Nombre" class="campo">
                 <input type="email" name="email" placeholder="Tu Email" class="campo">
-                <input type="tel" name="celular" placeholder="Tu WhatsApp" class="campo" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                <input type="tel" name="celular" placeholder="Tu WhatsApp" class="campo">
                 <textarea id="mensaje" name= "mensaje" placeholder="Tu Mensaje..."></textarea>
                 <input type="submit" name="enviar" value="Enviar Mensaje" class="btn-enviar">
             </form>

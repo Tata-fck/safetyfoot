@@ -1,0 +1,223 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    flex: 1;
+    background: var(--fondo);
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body > .contenedor-principal {
+    flex: 1;
+}
+
+.contenedor-principal {
+    display: flex;
+    width: 70%;
+    margin: 20px auto;
+}
+
+.titulo-carrito {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    white-space: nowrap;
+}
+
+.cont-form{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contactForm{
+    width: 70%;
+}
+
+.cont-form a{
+    font-size: 1.2rem;
+    display: inline-block;
+    text-decoration: none;
+    width: 100%;
+    margin-bottom: 0.5vh;
+    color: black;
+    font-weight: 700;
+}
+.cont-form a i{
+    color: orange;
+    margin-right: 10px;
+}
+.cont-form form .campo, textarea{
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 1rem;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+.cont-form form textarea{
+    font-family: inherit;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none; /* Desactiva el redimensionamiento manual */
+    overflow: hidden; /* Oculta las barras de desplazamiento */
+}
+
+select {
+    width: 100%;
+    padding: 16px 20px;
+    border: solid 1px #dbdbdb;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-size: 1rem;
+    color: #757575;
+}
+
+#resumen-precios {
+    width: 30%;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#resumen-precios h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+#resumen-precios ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+#resumen-precios ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resumen-imagen {
+    width: 100px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+.resumen-detalles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.resumen-nombre {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.resumen-cantidad,
+.resumen-precio,
+.resumen-subtotal {
+    font-size: 0.9em;
+    margin: 2px 0;
+}
+
+.resumen-oferta {
+    color: #ca2621;
+    text-decoration: line-through; /* Aplica la línea de tachado estándar */
+}
+
+#resumen-precios p {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.btn-continuar {
+    margin-top: 15px;
+    border: none;
+    background-color: #4CAF50;
+    width: 100%;
+    padding: 15px 0 15px 0;
+    color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.btn-continuar:hover {
+    color: #757065;
+}
+
+.img-paloma {
+    width: 25px;
+    margin-right: 20px;
+    filter: invert(100%);
+    cursor: pointer;
+    transition: filter 0s ease-in-out;
+}
+
+.btn-continuar:hover .img-paloma {
+    filter: invert(50%);
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 830px) {
+    .contenedor-principal {
+        flex-direction: column; /* Cambiar a una sola columna */
+        width: 90%; /* Ocupa el 90% del ancho de la pantalla */
+    }
+
+    .img-carrito-vacio {
+        width: 100%;
+    }
+
+    #contactForm {
+        width: 100%;
+    }
+
+    .cont-form,
+    #resumen-precios {
+        width: 100%; /* Cada sección ocupa el 100% del contenedor */
+        margin-bottom: 20px; /* Espaciado entre las secciones */
+        padding-right: 0;
+    }
+
+    #resumen-precios {
+        padding: 15px; /* Reducir el padding para dispositivos pequeños */
+    }
+
+    .resumen-imagen {
+        width: 80px; /* Ajustar el tamaño de la imagen en el resumen */
+        height: 50px;
+    }
+
+    .resumen-detalles {
+        font-size: 0.9em; /* Reducir ligeramente el tamaño del texto */
+    }
+}

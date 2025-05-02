@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $headers = "From: contacto@clientes.mx\r\nReply-To: $email\n";
 
     if (mail($destinatario, $asunto, $cuerpo, $headers)) {
-        echo "<p style='color:green;'>¡Mensaje enviado con éxito!</p>";
+        echo "<p style='color:green;'>¡MENSAJE ENVIADO CON EXITO!<br>A la brevedad nos comunicaremos con usted</p>";
     } else {
         echo "<p style='color:red;'>Error al enviar el mensaje.</p>";
     }

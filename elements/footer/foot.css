@@ -1,4 +1,7 @@
 /*:::::Pie de Pagina*/
+footer.pie-pagina{
+    margin-top: auto;
+}
 
 .pie-pagina{
     width: 100%;

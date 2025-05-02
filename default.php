@@ -80,7 +80,7 @@ $listaProductos = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
                 
                 <h2>ENVIOS</h2>
                 
-                    <p>Compra ## pares o más</p>
+                    <p>Compra 6 pares o más</p>
                 
                     <p>y obten un precio especial.</p>
             </div>
